@@ -9,6 +9,7 @@
 	
 	<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="phonegap.js"></script>
+	<script src="js/fastclick.js" type="text/javascript"></script>
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 <!--
   <script type="text/javascript">
@@ -36,11 +37,13 @@
 				//This is a second time launch, and count = applaunchCount
 				window.localStorage.setItem('applaunchCount2',applaunchCount2+1);
 				console.log('second run : ' + applaunchCount2);
+				$("#result").html('second run : ' + applaunchCount2);
 			}else{
 				//Local storage is not set, hence first time launch. set the local storage item
 				window.localStorage.setItem('launchCount',1);
 				window.localStorage.setItem('applaunchCount2',1);
 				console.log('first run');
+				$("#result").html('first run');
 				//Do the other stuff related to first time launch
 			}
 			
@@ -62,7 +65,7 @@
 <body onload="init()">
 <br/><br/><br/><br/><br/><br/><br/>
 
-
+	<div id="result">start00000000</div>
 	<div id="wrapper" style="width:100%;margin:0;">
 		<a href="00.html" >1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</a>
 
