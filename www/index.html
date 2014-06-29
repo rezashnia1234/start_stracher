@@ -35,9 +35,11 @@
 			//Check if it already exists or not
 			if(applaunchCount){
 				//This is a second time launch, and count = applaunchCount
-				window.localStorage.setItem('applaunchCount2',applaunchCount2+1);
-				console.log('second run : ' + applaunchCount2);
-				$("#result").html('second run : ' + applaunchCount2);
+				var temp = parseInt($(this).attr('id'), 10);
+				++temp;
+				window.localStorage.setItem('applaunchCount2',temp);
+				console.log('second run : ' + temp);
+				$("#result").html('second run : ' + temp);
 			}else{
 				//Local storage is not set, hence first time launch. set the local storage item
 				window.localStorage.setItem('launchCount',1);
