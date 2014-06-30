@@ -188,11 +188,22 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext ; // fullpath and name of the file which we want to give
 		//alert("fp = " + fp);
 		
+		
+		//fileSystem.root.getFile(fp, { create: false }, fileExists, fileDoesNotExist);
+		function fileExists(){
+			alert("File " +  " exists!");
+			//return fp;
+		}
+		function fileDoesNotExist(){
+			alert("file does not exist");
+			DownloadFile(File_URL, Folder_Name, File_Name);
+		}
+		
+		
 		var reader = new FileReader();
 		var fileSource = fp;
 
 		reader.onloadend = function(evt) {
-
 			if(evt.target.result == null) {
 			   // If you receive a null value the file doesn't exists
 			   fileDoesNotExist();
@@ -204,16 +215,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 
 		// We are going to check if the file exists
 		reader.readAsDataURL(fileSource); 
-		//fileSystem.root.getFile(fp, { create: false }, fileExists, fileDoesNotExist);
-		function fileExists(){
-			alert("File " +  " exists!");
-			
-			//return fp;
-		}
-		function fileDoesNotExist(){
-			alert("file does not exist");
-			DownloadFile(File_URL, Folder_Name, File_Name);
-		}
+
 	}
 
 	function fileSystemFail_fileSystemSuccess_GetSavedFile(evt) {
