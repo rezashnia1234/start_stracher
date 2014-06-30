@@ -47,7 +47,7 @@
 			document.addEventListener("deviceready", onDeviceReady, false);
 		}
 		function onDeviceReady() {
-			checkConnection();
+			//checkConnection();
 			//DownloadFile(URL, Folder_Name, File_Name);
 			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768.png");
 				
@@ -113,10 +113,11 @@ function download(URL, Folder_Name, File_Name) {
 		directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
 		var rootdir = fileSystem.root;
 
-		alert("rootdir 1 : " + fileSystem.root);
-		alert("rootdir 2 : " + fileSystem.root.toURL() );
+		//alert("rootdir 1 : " + fileSystem.root.fullPath);
+		//alert("rootdir 2 : " + fileSystem.root.toURL() );
 
-		var fp = rootdir.fullPath; // Returns Fulpath of local directory
+		//var fp = rootdir.fullPath; // Returns Fulpath of local directory
+		var fp = rootdir.toURL(); // Returns Fulpath of local directory
 
 		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext; // fullpath and name of the file which we want to give
 		// download function call
@@ -142,7 +143,7 @@ function filetransfer(download_link, fp) {
 	// File download function with URL and local path
 	fileTransfer.download(download_link, fp,
                     function (entry) {
-                        alert("download complete: " + entry.fullPath);
+                        alert("download complete: " + entry.toURL());
                     },
                  function (error) {
                      //Download abort errors or download failed errors
