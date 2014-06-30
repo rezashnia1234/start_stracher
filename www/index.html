@@ -47,8 +47,8 @@
 				console.log('first run');
 				$("#result").html('first run');
 				
-				//DownloadFile(URL, Folder_Name, File_Name)
-				DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "hamid", "test768.jpg")
+				//DownloadFile(URL, Folder_Name, File_Name);
+				DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768.png");
 			}
 			/*
 				function test() {}
@@ -127,7 +127,50 @@ function filetransfer(download_link, fp) {
                  }
 	);
 }
-	
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+/*
+var ShowSavedImage = function(Imagename){
+	alert("in ShowSavedImage ");
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
+}
+*/
+function onFail(message) {
+  alert('Failed because: ' + message);
+}
+
+function gotFS(fileSystem) {
+    fileSystem.root.getFile("Pictures/test768.png", {create: true}, gotFileEntry, fail);
+}
+
+function gotFileEntry(fileEntry) {
+    fileEntry.file(gotFile, fail);
+}
+
+function gotFile(file){
+    readDataUrl(file);  
+}
+
+function readDataUrl(file) {
+       var reader = new FileReader();
+       reader.onloadend = function(evt) {
+       console.log("Read as data URL");
+       console.log(evt.target.result);
+       document.getElementById("smallImage").style.display='block'; 
+       document.getElementById("smallImage").src = evt.target.result;   
+    }; 
+    reader.readAsDataURL(file);
+}
+
+function fail(evt) {
+    console.log(evt.target.error.code);
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	
@@ -159,6 +202,7 @@ function filetransfer(download_link, fp) {
 		//after DOM Loaded
 		function loaded() {
 			console.log('DOM Loaded 1');
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
 		}
 		function loaded2() {
 			console.log('DOM Loaded 2');
@@ -178,6 +222,7 @@ function filetransfer(download_link, fp) {
 	<br/><br/><br/><br/><br/><br/><br/>
 
 		<div id="result">start00000000</div>
+		<img style="display:none;height:600px;" id="smallImage" src="" />
 		<div id="wrapper" style="width:100%;margin:0;">
 			<p>
 				<a href="00.html" >aaaaaaaaaaaaaaaaaaaaaaaaaa</a>
