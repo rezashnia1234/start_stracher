@@ -27,10 +27,31 @@
 -->
 
 	<script type="text/javascript">
+function checkConnection() {
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.CELL]     = 'Cell generic connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    alert('Connection type: ' + states[networkState]);
+}
+
+
+
+	
 		function init() {
-			document.addEventListener("deviceready", onDeviceReady, false);
+			//document.addEventListener("deviceready", onDeviceReady, false);
 		}
 		function onDeviceReady() {
+			checkConnection();
+		
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			
@@ -41,14 +62,14 @@
 				window.localStorage.setItem('applaunchCount2',temp);
 				console.log('second run : ' + temp);
 				$("#result").html('second run : ' + temp);
+				
+				//DownloadFile(URL, Folder_Name, File_Name);
+				//DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768.png");
 			}else{
 				window.localStorage.setItem('launchCount',1);
 				window.localStorage.setItem('applaunchCount2',1);
 				console.log('first run');
 				$("#result").html('first run');
-				
-				//DownloadFile(URL, Folder_Name, File_Name);
-				DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768.png");
 			}
 			/*
 				function test() {}
@@ -68,14 +89,18 @@
 function DownloadFile(URL, Folder_Name, File_Name) {
 	//Parameters mismatch check
 	if (URL == null && Folder_Name == null && File_Name == null) {
+		alert("Parameters mismatch check");
 		return;
 	}
 	else {
+
 		//checking Internet connection availablity
 		var networkState = navigator.connection.type;
+			alert("check internet");
 		if (networkState == Connection.NONE) {
 			return;
 		} else {
+			alert("we have internet");
 			download(URL, Folder_Name, File_Name); //If available download function call
 		}
 	}
@@ -202,7 +227,7 @@ function fail(evt) {
 		//after DOM Loaded
 		function loaded() {
 			console.log('DOM Loaded 1');
-			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
+			//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
 		}
 		function loaded2() {
 			console.log('DOM Loaded 2');
@@ -221,8 +246,9 @@ function fail(evt) {
 	<div id="main">
 	<br/><br/><br/><br/><br/><br/><br/>
 
-		<div id="result">start00000000</div>
+		<div id="result" onclick="alert("salam");">start00000000</div>
 		<img style="display:none;height:600px;" id="smallImage" src="" />
+		<img style="height:600px;"  src="http://cdn.sstatic.net/stackoverflow/img/sprites.png" />
 		<div id="wrapper" style="width:100%;margin:0;">
 			<p>
 				<a href="00.html" >aaaaaaaaaaaaaaaaaaaaaaaaaa</a>
