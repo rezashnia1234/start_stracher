@@ -199,22 +199,20 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 			DownloadFile(File_URL, Folder_Name, File_Name);
 		}
 		
-		
-		var reader = new FileReader();
-		var fileSource = fp;
+    var reader = new FileReader();
+    reader.onloadend = function (evt) {
+        alert("read success");
+        alert(evt.target.result);
+		if(evt.target.result == null) {
+		   // If you receive a null value the file doesn't exists
+		   fileDoesNotExist();
+		} else {
+			// Otherwise the file exists
+			fileExists();
+		}    
+    };
+    reader.readAsDataURL(fp);
 
-		reader.onloadend = function(evt) {
-			if(evt.target.result == null) {
-			   // If you receive a null value the file doesn't exists
-			   fileDoesNotExist();
-			} else {
-				// Otherwise the file exists
-				fileExists();
-			}         
-		};
-
-		// We are going to check if the file exists
-		reader.readAsDataURL(fileSource); 
 
 	}
 
