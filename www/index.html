@@ -169,40 +169,51 @@ var ShowSavedImage = function(Imagename){
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
 }
 */
-function onFail(message) {
-  alert('Failed because: ' + message);
+function GetSavedFile(Folder_Name, File_Name) {
+	//step to request a file system 
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
+
+	function fileSystemSuccess_GetSavedFile(fileSystem) {
+		var rootdir = fileSystem.root;
+		var fp = rootdir.toURL(); // Returns Fulpath of local directory
+		fp = fp + "/" + Folder_Name + "/" + File_Name // fullpath and name of the file which we want to give
+		alert(fp);
+	    fileSystem.root.getFile(Folder_Name + "/" + File_Name, {create: true}, gotFileEntry, fail);
+
+	}
+
+	function fileSystemFail_fileSystemSuccess_GetSavedFile(evt) {
+		//Unable to access file system
+		alert(evt.target.error.code);
+	}
+	
+	function gotFileEntry(fileEntry) {
+		alert("gotFileEntry");
+		fileEntry.file(gotFile, fail);
+	}
+
+	function gotFile(file){
+		alert("gotFile");
+		readDataUrl(file);  
+	}
+
+	function readDataUrl(file) {
+		var reader = new FileReader();
+		reader.onloadend = function(evt) {
+			console.log("Read as data URL");
+			console.log(evt.target.result);
+			document.getElementById("smallImage").style.display='block'; 
+			document.getElementById("smallImage").src = evt.target.result;   
+		}; 
+		reader.readAsDataURL(file);
+		alert("readDataUrl");
+	}
 }
 
-function gotFS(fileSystem) {
-	alert("gotFS");
-    fileSystem.root.getFile("Pictures/test768.png", {create: true}, gotFileEntry, fail);
-}
 
-function gotFileEntry(fileEntry) {
-	alert("gotFileEntry");
-    fileEntry.file(gotFile, fail);
-}
 
-function gotFile(file){
-	alert("gotFile");
-    readDataUrl(file);  
-}
 
-function readDataUrl(file) {
-	var reader = new FileReader();
-	reader.onloadend = function(evt) {
-		console.log("Read as data URL");
-		console.log(evt.target.result);
-		document.getElementById("smallImage").style.display='block'; 
-		document.getElementById("smallImage").src = evt.target.result;   
-    }; 
-    reader.readAsDataURL(file);
-	alert("readDataUrl");
-}
 
-function fail(evt) {
-    console.log(evt.target.error.code);
-}
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -238,13 +249,11 @@ function fail(evt) {
 		//after DOM Loaded
 		function loaded() {
 			console.log('DOM Loaded 1');
-			var ShowSavedImage = function(Imagename){
-				alert("in ShowSavedImage ");
-				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
-			}
+
 		}
 		function loaded2() {
 			console.log('DOM Loaded 2');
+			GetSavedFile("Pictures", "test768.png");
 		}
 		document.addEventListener('DOMContentLoaded', loaded, false);
 	</script>
