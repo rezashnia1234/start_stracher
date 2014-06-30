@@ -181,7 +181,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 	function fileSystemSuccess_GetSavedFile(fileSystem) {
 		var rootdir = fileSystem.root;
 		var fp = rootdir.toURL(); // Returns Fulpath of local directory
-		fp = fp + "/" + Folder_Name + "/" + File_Name // fullpath and name of the file which we want to give
+		fp = fp + "/" + Folder_Name + "/" + File_Name; // fullpath and name of the file which we want to give
 		alert("fp = " + fp);
 		
 		fileSystem.root.getFile(fp, { create: false }, fileExists, fileDoesNotExist);
