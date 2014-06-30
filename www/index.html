@@ -27,31 +27,28 @@
 -->
 
 	<script type="text/javascript">
-function checkConnection() {
-    var networkState = navigator.connection.type;
+		function checkConnection() {
+			var networkState = navigator.connection.type;
 
-    var states = {};
-    states[Connection.UNKNOWN]  = 'Unknown connection';
-    states[Connection.ETHERNET] = 'Ethernet connection';
-    states[Connection.WIFI]     = 'WiFi connection';
-    states[Connection.CELL_2G]  = 'Cell 2G connection';
-    states[Connection.CELL_3G]  = 'Cell 3G connection';
-    states[Connection.CELL_4G]  = 'Cell 4G connection';
-    states[Connection.CELL]     = 'Cell generic connection';
-    states[Connection.NONE]     = 'No network connection';
+			var states = {};
+			states[Connection.UNKNOWN]  = 'Unknown connection';
+			states[Connection.ETHERNET] = 'Ethernet connection';
+			states[Connection.WIFI]     = 'WiFi connection';
+			states[Connection.CELL_2G]  = 'Cell 2G connection';
+			states[Connection.CELL_3G]  = 'Cell 3G connection';
+			states[Connection.CELL_4G]  = 'Cell 4G connection';
+			states[Connection.CELL]     = 'Cell generic connection';
+			states[Connection.NONE]     = 'No network connection';
 
-    alert('Connection type: ' + states[networkState]);
-}
-
-
-
-	
+			alert('Connection type: ' + states[networkState]);
+		}
+		
 		function init() {
-			//document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener("deviceready", onDeviceReady, false);
 		}
 		function onDeviceReady() {
 			checkConnection();
-		
+			
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			
@@ -89,15 +86,15 @@ function checkConnection() {
 function DownloadFile(URL, Folder_Name, File_Name) {
 	//Parameters mismatch check
 	if (URL == null && Folder_Name == null && File_Name == null) {
-		alert("Parameters mismatch check");
 		return;
 	}
 	else {
+		//alert("check internet");
 
 		//checking Internet connection availablity
 		var networkState = navigator.connection.type;
-			alert("check internet");
 		if (networkState == Connection.NONE) {
+			alert("we dont have internet");
 			return;
 		} else {
 			alert("we have internet");
