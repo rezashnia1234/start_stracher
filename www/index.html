@@ -238,7 +238,10 @@ function fail(evt) {
 		//after DOM Loaded
 		function loaded() {
 			console.log('DOM Loaded 1');
-			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
+			var ShowSavedImage = function(Imagename){
+				alert("in ShowSavedImage ");
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
+			}
 		}
 		function loaded2() {
 			console.log('DOM Loaded 2');
