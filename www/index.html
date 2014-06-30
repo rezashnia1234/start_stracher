@@ -173,9 +173,10 @@ var ShowSavedImage = function(Imagename){
 }
 */
 function GetSavedFile(File_URL,Folder_Name, File_Name) {
+	alert("GetSavedFile : " + File_URL + "/////" + Folder_Name + File_Name );
 	var result;
 	//step to request a file system 
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile(fileSystem,File_URL,Folder_Name, File_Name), fileSystemFail_fileSystemSuccess_GetSavedFile);
 
 	function fileSystemSuccess_GetSavedFile(fileSystem,File_URL,Folder_Name, File_Name) {
 		var rootdir = fileSystem.root;
