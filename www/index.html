@@ -176,21 +176,21 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 	alert("GetSavedFile : " + File_URL + "/////" + Folder_Name + File_Name );
 	var result;
 	//step to request a file system 
-	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile(fileSystem,File_URL,Folder_Name, File_Name), fileSystemFail_fileSystemSuccess_GetSavedFile);
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
-	function fileSystemSuccess_GetSavedFile(fileSystem,File_URL,Folder_Name, File_Name) {
+	function fileSystemSuccess_GetSavedFile(fileSystem) {
 		var rootdir = fileSystem.root;
 		var fp = rootdir.toURL(); // Returns Fulpath of local directory
 		fp = fp + "/" + Folder_Name + "/" + File_Name // fullpath and name of the file which we want to give
 		alert("fp = " + fp);
 		
-		fileSystem.root.getFile(fp, { create: false }, fileExists, fileDoesNotExist(File_URL,Folder_Name, File_Name)	);
+		fileSystem.root.getFile(fp, { create: false }, fileExists, fileDoesNotExist);
 		function fileExists(fileEntry){
 			alert("File " + fileEntry.fullPath + " exists!");
 			
 			//return fp;
 		}
-		function fileDoesNotExist(File_URL,Folder_Name, File_Name){
+		function fileDoesNotExist(){
 			alert("file does not exist");
 			DownloadFile(File_URL, Folder_Name, File_Name);
 		}
