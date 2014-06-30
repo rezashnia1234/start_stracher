@@ -1,0 +1,66 @@
+﻿ /*-------------- reset ------------------ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+	line-height:170%;
+	font-family:Tahoma;
+	font-size:13px;
+}
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+	line-height:170%;
+	font-family:Tahoma;
+	font-size:13px;
+}
+th, td{
+ text-align: right;
+ vertical-align: top;
+}
+div{
+ position:relative;
+}
+h1, h2, h3, h4, h5, h6, th, td, caption { font-weight:normal; }
+input,textarea,select{
+	font-family:Tahoma;
+	font-size:13px;
+	direction:rtl;
+}
+body {
+	text-align:right;
+}
+a{
+	text-decoration:none;
+}
+
+
+
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+*:focus { outline: none; }
+*::-moz-focus-inner ,
+*::-o-focus-inner{ border: none;}
+
+
+ /*-------------- END reset ------------------ */
