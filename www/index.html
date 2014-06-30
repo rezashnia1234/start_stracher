@@ -175,15 +175,17 @@ var ShowSavedImage = function(Imagename){
 */
 function GetSavedFile(File_URL,Folder_Name, File_Name) {
 	var result;
-	var File_URL_link = encodeURI(File_URL);
-	ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1); //Get extension of URL
-	alert(ext);
 	//step to request a file system 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
 	function fileSystemSuccess_GetSavedFile(fileSystem) {
 		var rootdir = fileSystem.root;
 		var fp = rootdir.toURL(); // Returns Fulpath of local directory
+		
+		var File_URL_link = encodeURI(File_URL);
+		ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1); //Get extension of URL
+		alert(ext);
+		
 		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext ; // fullpath and name of the file which we want to give
 		alert("fp = " + fp);
 		
