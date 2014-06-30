@@ -49,7 +49,7 @@
 		function onDeviceReady() {
 			//checkConnection();
 			//DownloadFile(URL, Folder_Name, File_Name);
-			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768.png");
+			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768");
 				
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
@@ -82,7 +82,11 @@
 		}
 	
 	
-	
+// START DOWNLOAD FUNCTIONS :///////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
 //First step check parameters mismatch and checking network connection if available call    download function
 function DownloadFile(URL, Folder_Name, File_Name) {
 	//Parameters mismatch check
@@ -154,10 +158,11 @@ function filetransfer(download_link, fp) {
                  }
 	);
 }
+// END DOWNLOAD FUNCTIONS ://///////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
+// START SHOW IMAGE FUNCTIONS ://///////////////////////////////////////////////////////////
 /*
 var ShowSavedImage = function(Imagename){
 	alert("in ShowSavedImage ");
@@ -169,26 +174,30 @@ function onFail(message) {
 }
 
 function gotFS(fileSystem) {
+	alert("gotFS");
     fileSystem.root.getFile("Pictures/test768.png", {create: true}, gotFileEntry, fail);
 }
 
 function gotFileEntry(fileEntry) {
+	alert("gotFileEntry");
     fileEntry.file(gotFile, fail);
 }
 
 function gotFile(file){
+	alert("gotFile");
     readDataUrl(file);  
 }
 
 function readDataUrl(file) {
-       var reader = new FileReader();
-       reader.onloadend = function(evt) {
-       console.log("Read as data URL");
-       console.log(evt.target.result);
-       document.getElementById("smallImage").style.display='block'; 
-       document.getElementById("smallImage").src = evt.target.result;   
+	var reader = new FileReader();
+	reader.onloadend = function(evt) {
+		console.log("Read as data URL");
+		console.log(evt.target.result);
+		document.getElementById("smallImage").style.display='block'; 
+		document.getElementById("smallImage").src = evt.target.result;   
     }; 
     reader.readAsDataURL(file);
+	alert("readDataUrl");
 }
 
 function fail(evt) {
@@ -229,7 +238,7 @@ function fail(evt) {
 		//after DOM Loaded
 		function loaded() {
 			console.log('DOM Loaded 1');
-			//window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
+			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
 		}
 		function loaded2() {
 			console.log('DOM Loaded 2');
@@ -242,8 +251,7 @@ function fail(evt) {
 			margin:0 auto;
 		}
 	</style>
-  </head>
-<!--<body onload="OnLoad();">-->
+</head>
 <body onload="init()">
 	<div id="main">
 	<br/><br/><br/><br/><br/><br/><br/>
