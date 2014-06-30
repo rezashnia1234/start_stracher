@@ -50,7 +50,8 @@
 			//checkConnection();
 			//DownloadFile(URL, Folder_Name, File_Name);
 			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768");
-				
+			GetSavedFile("Pictures", "test768.png");
+			
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			
@@ -146,15 +147,15 @@ function filetransfer(download_link, fp) {
 	var fileTransfer = new FileTransfer();
 	// File download function with URL and local path
 	fileTransfer.download(download_link, fp,
-                    function (entry) {
-                        alert("download complete: " + entry.toURL());
-                    },
+				function (entry) {
+					//alert("download complete: " + entry.toURL());
+				},
                  function (error) {
                      //Download abort errors or download failed errors
-                     alert("download error source " + error.source);
-                     alert("download error target " + error.target);
-                     alert("upload error code" + error.code);
-                     alert("fiel path : " + fp);
+                     //alert("download error source " + error.source);
+                     //alert("download error target " + error.target);
+                     //alert("upload error code" + error.code);
+                     //alert("fiel path : " + fp);
                  }
 	);
 }
@@ -178,7 +179,7 @@ function GetSavedFile(Folder_Name, File_Name) {
 		var fp = rootdir.toURL(); // Returns Fulpath of local directory
 		fp = fp + "/" + Folder_Name + "/" + File_Name // fullpath and name of the file which we want to give
 		alert(fp);
-	    fileSystem.root.getFile(Folder_Name + "/" + File_Name, {create: true}, gotFileEntry, fail);
+	    fileSystem.root.getFile(Folder_Name + "/" + File_Name, {create: true}, gotFileEntry, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
 	}
 
@@ -189,7 +190,7 @@ function GetSavedFile(Folder_Name, File_Name) {
 	
 	function gotFileEntry(fileEntry) {
 		alert("gotFileEntry");
-		fileEntry.file(gotFile, fail);
+		fileEntry.file(gotFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 	}
 
 	function gotFile(file){
@@ -253,7 +254,7 @@ function GetSavedFile(Folder_Name, File_Name) {
 		}
 		function loaded2() {
 			console.log('DOM Loaded 2');
-			GetSavedFile("Pictures", "test768.png");
+			
 		}
 		document.addEventListener('DOMContentLoaded', loaded, false);
 	</script>
