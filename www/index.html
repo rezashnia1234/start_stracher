@@ -95,10 +95,8 @@ function DownloadFile(URL, Folder_Name, File_Name) {
 		//checking Internet connection availablity
 		var networkState = navigator.connection.type;
 		if (networkState == Connection.NONE) {
-			alert("we dont have internet");
 			return;
 		} else {
-			alert("we have internet");
 			download(URL, Folder_Name, File_Name); //If available download function call
 		}
 	}
@@ -145,8 +143,8 @@ function filetransfer(download_link, fp) {
                  function (error) {
                      //Download abort errors or download failed errors
                      alert("download error source " + error.source);
-                     //alert("download error target " + error.target);
-                     //alert("upload error code" + error.code);
+                     alert("download error target " + error.target);
+                     alert("upload error code" + error.code);
                  }
 	);
 }
