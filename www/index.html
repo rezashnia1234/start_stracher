@@ -199,19 +199,81 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 			DownloadFile(File_URL, Folder_Name, File_Name);
 		}
 		
-    var reader = new FileReader();
-    reader.onloadend = function (evt) {
-        alert("read success");
-        alert(evt.target.result);
-		if(evt.target.result == null) {
-		   // If you receive a null value the file doesn't exists
-		   fileDoesNotExist();
-		} else {
-			// Otherwise the file exists
-			fileExists();
-		}    
-    };
-    reader.readAsDataURL(fp);
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+    fileSystem.root.getFile(fp, null, gotFileEntry, fail);
+
+
+    function gotFileEntry(fileEntry) {
+        fileEntry.file(gotFile, fail);
+    }
+
+    function gotFile(file){
+        readDataUrl(file);
+        readAsText(file);
+    }
+
+    function readDataUrl(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            console.log("Read as data URL");
+            console.log(evt.target.result);
+			
+			alert("readDataUrl : " + evt.target.result)
+			if(evt.target.result == null) {
+			   fileExists();
+			} else {
+				fileDoesNotExist();
+			}
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function readAsText(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            console.log("Read as text");
+            console.log(evt.target.result);
+			
+			alert("readAsText : " + evt.target.result)
+			if(evt.target.result == null) {
+			   fileExists();
+			} else {
+				fileDoesNotExist();
+			}
+        };
+        reader.readAsText(file);
+    }
+
+    function fail(evt) {
+        console.log(evt.target.error.code);
+    }
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 
 	}
