@@ -48,7 +48,9 @@
 		}
 		function onDeviceReady() {
 			checkConnection();
-			
+			//DownloadFile(URL, Folder_Name, File_Name);
+			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768.png");
+				
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			
@@ -60,8 +62,7 @@
 				console.log('second run : ' + temp);
 				$("#result").html('second run : ' + temp);
 				
-				//DownloadFile(URL, Folder_Name, File_Name);
-				//DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768.png");
+
 			}else{
 				window.localStorage.setItem('launchCount',1);
 				window.localStorage.setItem('applaunchCount2',1);
