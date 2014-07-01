@@ -13,6 +13,7 @@
 	<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
 	<script src="phonegap.js" type="text/javascript"></script>
 	<script src="js/fastclick.js" type="text/javascript"></script>
+	<script src="js/gapfile.js" type="text/javascript"></script>
 <!--
   <script type="text/javascript">
  	   function OnLoad(){
@@ -199,7 +200,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 			DownloadFile(File_URL, Folder_Name, File_Name);
 		}
 		
-
+GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, fileExists, fileDoesNotExist);
 		
 		
 		
@@ -217,53 +218,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		
 		
 
-    fileSystem.root.getFile(fp, null, gotFileEntry, fail);
 
-
-    function gotFileEntry(fileEntry) {
-        fileEntry.file(gotFile, fail);
-    }
-
-    function gotFile(file){
-        readDataUrl(file);
-        readAsText(file);
-    }
-
-    function readDataUrl(file) {
-        var reader = new FileReader();
-        reader.onloadend = function(evt) {
-            console.log("Read as data URL");
-            console.log(evt.target.result);
-			
-			alert("readDataUrl : " + evt.target.result)
-			if(evt.target.result == null) {
-			   fileExists();
-			} else {
-				fileDoesNotExist();
-			}
-        };
-        reader.readAsDataURL(file);
-    }
-
-    function readAsText(file) {
-        var reader = new FileReader();
-        reader.onloadend = function(evt) {
-            console.log("Read as text");
-            console.log(evt.target.result);
-			
-			alert("readAsText : " + evt.target.result)
-			if(evt.target.result == null) {
-			   fileExists();
-			} else {
-				fileDoesNotExist();
-			}
-        };
-        reader.readAsText(file);
-    }
-
-    function fail(evt) {
-        console.log(evt.target.error.code);
-    }
 
 		
 		
