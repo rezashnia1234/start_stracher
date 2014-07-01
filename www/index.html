@@ -190,26 +190,24 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		//alert("fp = " + fp);
 		
 		
-		//fileSystem.root.getFile(fp, { create: false }, fileExists, fileDoesNotExist);
-		function fileExists(result){
+		function is_fileExists(result){
 			if(result)
 			{
-				alert("File " +  " exists!" + fp);
+				alert("File " +  " exists!");
 				//return fp;
 			}
 			else
 			{
-				alert("file does not exist" + fp);
+				//fileDoesNotExist
+				alert("file does not exist");
 				DownloadFile(File_URL, Folder_Name, File_Name);
 			}
 		}
 		function fileDoesNotExist(){
-			alert("file does not exist");
-			DownloadFile(File_URL, Folder_Name, File_Name);
-		}
-		
-GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, fileExists, fileDoesNotExist);
-GapFile.fileExists(fp, fileExists, fileDoesNotExist);
+				alert("we have some problem");
+		}	
+		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, fileDoesNotExist);
+		//GapFile.fileExists(fp, is_fileExists, fileDoesNotExist);
 		
 		
 		
