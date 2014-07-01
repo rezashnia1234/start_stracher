@@ -140,12 +140,10 @@ var GapFile = {
 	},
 
 	fileExists: function(fullpath,success,fail){
-		alert("fullpath =" + fullpath);
 		var dirName = this.extractDirectory(fullpath);
 		var fileName = this.extractFilename(fullpath);
 		this.readDirectory(dirName,function(flist){
 			for(var i = 0; i < flist.length; i++ ){
-				alert(flist[i]);
 				if(flist[i].match(fileName)){
 					success(true);
 					return;
