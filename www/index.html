@@ -191,9 +191,17 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		
 		
 		//fileSystem.root.getFile(fp, { create: false }, fileExists, fileDoesNotExist);
-		function fileExists(){
-			alert("File " +  " exists!");
-			//return fp;
+		function fileExists(result){
+			if(result)
+			{
+				alert("File " +  " exists!" + fp);
+				//return fp;
+			}
+			else
+			{
+				alert("file does not exist" + fp);
+				DownloadFile(File_URL, Folder_Name, File_Name);
+			}
 		}
 		function fileDoesNotExist(){
 			alert("file does not exist");
@@ -201,6 +209,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		}
 		
 GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, fileExists, fileDoesNotExist);
+GapFile.fileExists(fp, fileExists, fileDoesNotExist);
 		
 		
 		
