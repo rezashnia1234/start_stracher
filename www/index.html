@@ -1,160 +1,323 @@
-/* 
-* File system wrappers for Phonegap/Apache Cordova
-* by Anthony W. Hursh, tony.hursh@gmail.com
-* Copyright 2013 by Contraterrene eLearning Group, LLC
-* Made available under the terms of the Apache 2.0 license
-* (the same license as Phonegap/Cordova itself). See the NOTICE
-* file for details.
-*/
-var GapFile = {
-		extractDirectory: function(path){
-		var dirPath;
-		var lastSlash = path.lastIndexOf('/');
-		if(lastSlash == -1){
-			dirPath = "/";
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"   >
+<head>
+	<meta name="format-detection" content="telephone-no">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="stylesheet" href="css/reset.css" type="text/css" /> 
+	
+	<title>save image test</title>
+	
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
+	<script src="phonegap.js" type="text/javascript"></script>
+	<script src="js/fastclick.js" type="text/javascript"></script>
+	<script src="js/gapfile.js" type="text/javascript"></script>
+<!--
+  <script type="text/javascript">
+ 	   function OnLoad(){
+		 document.addEventListener('deviceready', function(){
+			 cordova.plugins.ZoomControl.ZoomControl("true");
+		 }, function(){
+			 alert('error deviceready');
+		 });
+		 
+	   }
+	</script>
+-->
+
+	<script type="text/javascript">
+		function checkConnection() {
+			var networkState = navigator.connection.type;
+
+			var states = {};
+			states[Connection.UNKNOWN]  = 'Unknown connection';
+			states[Connection.ETHERNET] = 'Ethernet connection';
+			states[Connection.WIFI]     = 'WiFi connection';
+			states[Connection.CELL_2G]  = 'Cell 2G connection';
+			states[Connection.CELL_3G]  = 'Cell 3G connection';
+			states[Connection.CELL_4G]  = 'Cell 4G connection';
+			states[Connection.CELL]     = 'Cell generic connection';
+			states[Connection.NONE]     = 'No network connection';
+
+			alert('Connection type: ' + states[networkState]);
 		}
-		else{
-			dirPath = path.substring(0,lastSlash);
-			if(dirPath == ""){
-				dirPath = "/";
+		
+		function init() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			//checkConnection();
+
+			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768");
+			//GetSavedFile("Pictures", "test768.png");
+			//GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","Pictures", "test110");
+			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","Pictures", "test111");
+			
+			
+			var applaunchCount = window.localStorage.getItem('launchCount');
+			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
+			
+			//Check if it already exists or not
+			if(applaunchCount){
+				var temp = parseInt(applaunchCount2, 10);
+				temp = temp +1;
+				window.localStorage.setItem('applaunchCount2',temp);
+				console.log('second run : ' + temp);
+				$("#result").html('second run : ' + temp);
+				
+
+			}else{
+				window.localStorage.setItem('launchCount',1);
+				window.localStorage.setItem('applaunchCount2',1);
+				console.log('first run');
+				$("#result").html('first run');
 			}
+			/*
+				function test() {}
+
+				if (test())
+				   console.log('true');
+				else  
+				   console.log('false')
+			*/
+			
+			
 		}
-		return dirPath;
-	},
+	
+	
+// START DOWNLOAD FUNCTIONS :///////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
 
-	extractFilename: function(path){
-		var lastSlash = path.lastIndexOf('/');
-		if(lastSlash == -1){
-			return path;
-		}
-		var filename =  path.substring(lastSlash + 1);
-		return filename;
-	},
-
-	appendFile: function(fullpath,data,success,fail){
-		this.llWriteFile(fullpath,data,success,fail,true);
-	},
-	
-	writeFile: function(fullpath,data,success,fail){
-		this.llWriteFile(fullpath,data,success,fail,false);
-	},
-	
-	llWriteFile: function(fullpath,data,success,fail,append){
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-			function(fileSystem){
-				fileSystem.root.getDirectory(GapFile.extractDirectory(fullpath), {create: true, exclusive: false},
-				function(dirEntry){
-					dirEntry.getFile(GapFile.extractFilename(fullpath), {create: true}, 
-					function(fileEntry){
-							var fileURL = fileEntry.toURL();
-							fileEntry.createWriter(
-								function(writer){
-									writer.onwrite = function(evt){
-										success(fileURL);
-									};
-									writer.onerror = function(evt){ 
-										fail(evt.target.error);
-									};
-									if(append == true){
-										writer.seek(writer.length);
-									}
-									writer.write(data);
-							},fail);
-					},fail);
-				},fail);
-			},fail);
-	},
-	readFile: function(fullpath,asText,success,fail){
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-			function(fileSystem){
-				fileSystem.root.getDirectory(GapFile.extractDirectory(fullpath), {create: false, exclusive: false},
-				function(dirEntry){
-					dirEntry.getFile(GapFile.extractFilename(fullpath), {create: false}, 
-					function(fileEntry){
-						fileEntry.file(function(file){
-							var reader = new FileReader();
-							reader.onloadend = function(evt) {
-								success(evt.target.result);
-							};
-							reader.onerror =  function(evt){
-								fail();
-							}
-							if(asText){
-								reader.readAsText(file);
-							}
-							else{
-								reader.readAsDataURL(file);
-							}
-							},fail);
-						},fail);
-					},fail);
-				},fail);
-	},
-	
-	deleteFile: function(fullpath,success,fail){
-			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-				function(fileSystem){
-					fileSystem.root.getDirectory(GapFile.extractDirectory(fullpath), {create: false, exclusive: false},
-					function(dirEntry){
-						dirEntry.getFile(GapFile.extractFilename(fullpath), {create: false}, 
-						function(fileEntry){
-							fileEntry.remove(success,fail);
-						},fail);
-					},fail);
-				},fail);
-	},
-	readDirectory: function(dirName,success,fail){
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-			function(fileSystem){
-				fileSystem.root.getDirectory(dirName, {create: false, exclusive: false},
-					function(dirEntry){
-						var directoryReader = dirEntry.createReader();
-						directoryReader.readEntries(
-							function(entries){
-								var flist = [];
-								for(var i = 0; i < entries.length; i++){
-									flist.push(entries[i].name);
-								}
-								success(flist);
-							},fail);
-					},fail);
-			},fail);       
-	},
-	
-	
-	mkDirectory: function(dirName,success,fail){
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-			function(fileSystem){
-		        fileSystem.root.getDirectory(dirName, {create: true, exclusive: false}, success, fail);
-			},fail);
-	},
-	
-	rmDirectory: function(dirName,success,fail){
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-			function(fileSystem){
-		        fileSystem.root.getDirectory(dirName, {create: false, exclusive: false}, 
-						function(dirEntry){
-							dirEntry.remove(success,fail);
-						},fail);
-				},fail)
-	},
-
-	fileExists: function(fullpath,success,fail){
-		var dirName = this.extractDirectory(fullpath);
-		var fileName = this.extractFilename(fullpath);
-		this.readDirectory(dirName,function(flist){
-			for(var i = 0; i < flist.length; i++ ){
-				if(flist[i].match(fileName)){
-					success(true);
-					return;
-				}
-			}
-			success(false);
-		},fail); 
+//First step check parameters mismatch and checking network connection if available call    download function
+function DownloadFile(URL, Folder_Name, File_Name) {
+	//Parameters mismatch check
+	if (URL == null && Folder_Name == null && File_Name == null) {
+		return;
 	}
-};
+	else {
+		//alert("check internet");
 
-if(module){
-	module.exports = GapFile;
+		//checking Internet connection availablity
+		var networkState = navigator.connection.type;
+		if (networkState == Connection.NONE) {
+			return;
+		} else {
+			download(URL, Folder_Name, File_Name); //If available download function call
+		}
+	}
+}
+function download(URL, Folder_Name, File_Name) {
+	//step to request a file system 
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
+
+	function fileSystemSuccess(fileSystem) {
+		var download_link = encodeURI(URL);
+		ext = download_link.substr(download_link.lastIndexOf('.') + 1); //Get extension of URL
+
+		var directoryEntry = fileSystem.root; // to get root path of directory
+		directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
+		var rootdir = fileSystem.root;
+
+		//alert("rootdir 1 : " + fileSystem.root.fullPath);
+		//alert("rootdir 2 : " + fileSystem.root.toURL() );
+
+		//var fp = rootdir.fullPath; // Returns Fulpath of local directory
+		var fp = rootdir.toURL(); // Returns Fulpath of local directory
+
+		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext; // fullpath and name of the file which we want to give
+		// download function call
+		filetransfer(download_link, fp);
+	}
+
+	function onDirectorySuccess(parent) {
+		// Directory created successfuly
+	}
+
+	function onDirectoryFail(error) {
+		//Error while creating directory
+		alert("Unable to create new directory: " + error.code);
+	}
+
+	function fileSystemFail(evt) {
+		//Unable to access file system
+		alert(evt.target.error.code);
+	}
+}
+function filetransfer(download_link, fp) {
+	var fileTransfer = new FileTransfer();
+	// File download function with URL and local path
+	fileTransfer.download(download_link, fp,
+				function (entry) {
+					//alert("download complete: " + entry.toURL());
+				},
+                 function (error) {
+                     //Download abort errors or download failed errors
+                     //alert("download error source " + error.source);
+                     //alert("download error target " + error.target);
+                     //alert("upload error code" + error.code);
+                     //alert("fiel path : " + fp);
+                 }
+	);
+}
+// END DOWNLOAD FUNCTIONS ://///////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// START SHOW IMAGE FUNCTIONS ://///////////////////////////////////////////////////////////
+/*
+var ShowSavedImage = function(Imagename){
+	alert("in ShowSavedImage ");
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
+}
+*/
+function GetSavedFile(File_URL,Folder_Name, File_Name) {
+	var result;
+	//step to request a file system 
+	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
+
+	function fileSystemSuccess_GetSavedFile(fileSystem) {
+		var rootdir = fileSystem.root;
+		var fp = rootdir.toURL(); // Returns Fulpath of local directory
+		
+		var File_URL_link = encodeURI(File_URL);
+		ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1); //Get extension of URL
+		
+		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext ; // fullpath and name of the file which we want to give
+		//alert("fp = " + fp);
+		
+		
+		function is_fileExists(result){
+			if(result)
+			{
+				alert("File " +  " exists!");
+				//return fp;
+			}
+			else
+			{
+				//fileDoesNotExist
+				alert("file does not exist");
+				DownloadFile(File_URL, Folder_Name, File_Name);
+			}
+		}
+		function fileDoesNotExist(){
+				alert("we have some problem");
+		}	
+		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, fileDoesNotExist);
+		//GapFile.fileExists(fp, is_fileExists, fileDoesNotExist);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+	}
+
+	function fileSystemFail_fileSystemSuccess_GetSavedFile(evt) {
+		//Unable to access file system
+		alert(evt.target.error.code);
+	}
+	
+	return result;
 }
 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		//after DOM Loaded
+		function loaded() {
+			console.log('DOM Loaded 1');
+
+		}
+		function loaded2() {
+			console.log('DOM Loaded 2');
+			
+		}
+		document.addEventListener('DOMContentLoaded', loaded, false);
+	</script>
+	<style>
+		#main{
+			max-width:1200px;
+			margin:0 auto;
+		}
+	</style>
+</head>
+<body onload="init()">
+	<div id="main">
+	<br/><br/><br/><br/><br/><br/><br/>
+
+		<div id="result" onclick="alert("salam");">start00000000</div>
+		<img style="height:600px;" id="smallImage" src="cdvfile://localhost/persistent/Pictures/test768.png" />
+		<img style="height:600px;"  src="http://cdn.sstatic.net/stackoverflow/img/sprites.png" />
+		<div id="wrapper" style="width:100%;margin:0;">
+			<p>
+				<a href="00.html" >aaaaaaaaaaaaaaaaaaaaaaaaaa</a>
+			</p>
+			<p>اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد 			اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد</p>
+			<p>اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد</p>
+
+		</div>
+	</div>
+	<script>loaded2();</script>
+</body>
+</html>
