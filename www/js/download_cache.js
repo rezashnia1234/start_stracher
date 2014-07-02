@@ -89,6 +89,7 @@ var ShowSavedImage = function(Imagename){
 */
 var chach_file_address;
 function GetSavedFile(File_URL,Folder_Name, File_Name) {
+	chach_file_address = "";
 	//step to request a file system 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
@@ -107,6 +108,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 			if(result)
 			{
 				alert("File " +  " exists!");
+				chach_file_address = fp;
 				//return fp;
 			}
 			else
@@ -114,52 +116,24 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 				//fileDoesNotExist
 				alert("file does not exist");
 				DownloadFile(File_URL, Folder_Name, File_Name);
+				chach_file_address = File_URL;
 			}
 		}
-		function fileDoesNotExist(){
+		function fileDownloadProblem(){
 				alert("we have some problem");
+				chach_file_address = File_URL;
 		}	
 
-		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, fileDoesNotExist);
-		//GapFile.fileExists(fp, is_fileExists, fileDoesNotExist);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-
+		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, fileDownloadProblem);
 	}
 
 	function fileSystemFail_fileSystemSuccess_GetSavedFile(evt) {
 		//Unable to access file system
 		alert(evt.target.error.code);
+		chach_file_address = File_URL;
 	}
 	
-	return result;
+	return chach_file_address;
 }
 
 
