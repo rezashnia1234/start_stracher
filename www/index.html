@@ -94,9 +94,11 @@
 
 //First step check parameters mismatch and checking network connection if available call    download function
 function DownloadFile(URL, Folder_Name, File_Name) {
+	var DownloadFileTemp = "";
 	//Parameters mismatch check
 	if (URL == null && Folder_Name == null && File_Name == null) {
-		return;
+		DownloadFileTemp = "img/blank.png";
+		//return;
 	}
 	else {
 		//alert("check internet");
@@ -104,11 +106,18 @@ function DownloadFile(URL, Folder_Name, File_Name) {
 		//checking Internet connection availablity
 		var networkState = navigator.connection.type;
 		if (networkState == Connection.NONE) {
-			return;
+			//return;
+			DownloadFileTemp = "img/blank.png";
 		} else {
 			download(URL, Folder_Name, File_Name); //If available download function call
+			var download_link = encodeURI(URL);
+			ext = download_link.substr(download_link.lastIndexOf('.') + 1); //Get extension of URL
+			fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext; // fullpath and name of the file which we want to give
+			DownloadFileTemp = fp;
 		}
 	}
+	
+	return DownloadFileTemp;
 }
 function download(URL, Folder_Name, File_Name) {
 	//step to request a file system 
@@ -174,8 +183,9 @@ var ShowSavedImage = function(Imagename){
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
 }
 */
+var cache_file_address;
 function GetSavedFile(File_URL,Folder_Name, File_Name) {
-	var result;
+	cache_file_address = "";
 	//step to request a file system 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
@@ -193,59 +203,31 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		function is_fileExists(result){
 			if(result)
 			{
-				alert("File " +  " exists!");
+				//alert("File " +  " exists!");
+				cache_file_address = fp;
 				//return fp;
 			}
 			else
 			{
 				//fileDoesNotExist
 				alert("file does not exist");
-				DownloadFile(File_URL, Folder_Name, File_Name);
+				cache_file_address = DownloadFile(File_URL, Folder_Name, File_Name);
 			}
 		}
-		function fileDoesNotExist(){
-				alert("we have some problem");
+		function file_Exist_error(){
+			//alert("we have some problem");
+			cache_file_address = "img/blank.png";
 		}	
-		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, fileDoesNotExist);
-		//GapFile.fileExists(fp, is_fileExists, fileDoesNotExist);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
-
+		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, file_Exist_error);
 	}
 
 	function fileSystemFail_fileSystemSuccess_GetSavedFile(evt) {
 		//Unable to access file system
-		alert(evt.target.error.code);
+		//alert(evt.target.error.code);
+		cache_file_address = "img/blank.png";
 	}
 	
-	return result;
+	return cache_file_address;
 }
 
 
