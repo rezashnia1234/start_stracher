@@ -28,19 +28,15 @@
 	</script>
 -->
 
-	<script type="text/javascript">	
+	<script type="text/javascript">
+		function GapFileSuccess(){
+				//alert("we have some problem");
+		}
 		function init() {
 			document.addEventListener("deviceready", onDeviceReady, false);
 		}
 		function onDeviceReady() {
-			//checkConnection();
 
-			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "Pictures", "test768");
-			//GetSavedFile("Pictures", "test768.png");
-			//GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","Pictures", "test110");
-			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","Pictures", "test111");
-			
-			
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			
@@ -54,7 +50,8 @@
 				
 
 			}else{
-				
+				GapFile.mkDirectory("temp", GapFileSuccess, GapFileSuccess);
+
 				window.localStorage.setItem('launchCount',1);
 				window.localStorage.setItem('applaunchCount2',1);
 				console.log('first run');
@@ -68,6 +65,13 @@
 				else  
 				   console.log('false')
 			*/
+			//checkConnection();
+
+			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp", "test768");
+			//GetSavedFile("temp", "test768.png");
+			//GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110");
+			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp", "test111");
+			
 			
 			
 		}
