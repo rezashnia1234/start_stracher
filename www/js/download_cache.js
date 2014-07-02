@@ -89,7 +89,6 @@ var ShowSavedImage = function(Imagename){
 */
 var chach_file_address;
 function GetSavedFile(File_URL,Folder_Name, File_Name) {
-	GapFile.mkDirectory(Folder_Name, GapFileSuccess, fileDoesNotExist);
 	//step to request a file system 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
@@ -120,9 +119,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		function fileDoesNotExist(){
 				alert("we have some problem");
 		}	
-		function GapFileSuccess(){
-				//alert("we have some problem");
-		}	
+
 		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, fileDoesNotExist);
 		//GapFile.fileExists(fp, is_fileExists, fileDoesNotExist);
 		
