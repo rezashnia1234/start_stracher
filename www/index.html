@@ -67,11 +67,13 @@
 			*/
 			//checkConnection();
 
-			DownloadFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp", "test768");
-			//GetSavedFile("temp", "test768.png");
-			//GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110");
-			//GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp", "test111");
-			alert(GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110") 	);
+			
+			var image_list = new Array();
+			var download_list = new Array();
+			GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp", "test768");
+			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110");
+			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp", "test111");
+			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110");
 			
 			
 		}
@@ -89,7 +91,15 @@
 		}
 		function loaded2() {
 			console.log('DOM Loaded 2');
-			
+			var image_list_temp = "";
+			var download_list_temp = "";
+			$.each( image_list, function( i, val ){
+				image_list_temp = image_list_temp + "<br/>" + "image Index #" + i + ": " + val ;
+			});
+			$.each( download_list, function( i, val ){
+				download_list_temp = download_list_temp + "<br/>" + "download Index #" + i + ": " + val ;
+			});
+			$("#result_download").html(image_list_temp + download_list_temp);
 		}
 		document.addEventListener('DOMContentLoaded', loaded, false);
 	</script>
@@ -105,6 +115,8 @@
 	<br/><br/><br/><br/><br/><br/><br/>
 
 		<div id="result" onclick="alert("salam");">start00000000</div>
+		<br/><br/>
+		<div id="result_download" >result_download</div>
 		<img style="height:600px;" id="smallImage" src="cdvfile://localhost/persistent/Pictures/test768.png" />
 		<img style="height:600px;"  src="http://cdn.sstatic.net/stackoverflow/img/sprites.png" />
 		

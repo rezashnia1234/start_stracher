@@ -101,22 +101,20 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1); //Get extension of URL
 		
 		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext ; // fullpath and name of the file which we want to give
-		//alert("fp = " + fp);
-		
 		
 		function is_fileExists(result){
 			if(result)
 			{
 				alert("File " +  " exists!");
 				chach_file_address = fp;
-				//return fp;
 			}
 			else
 			{
 				//fileDoesNotExist
 				alert("file does not exist");
-				DownloadFile(File_URL, Folder_Name, File_Name);
+				//DownloadFile(File_URL, Folder_Name, File_Name);
 				chach_file_address = File_URL;
+				download_list.push(File_URL);
 			}
 		}
 		function fileDownloadProblem(){
@@ -133,7 +131,7 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		chach_file_address = File_URL;
 	}
 	
-	return chach_file_address;
+	list.push(chach_file_address);
 }
 
 
