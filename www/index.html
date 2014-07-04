@@ -34,7 +34,7 @@
 		}
 		function init() {
 			document.addEventListener("deviceready", onDeviceReady, false);
-			document.addEventListener("DOMContentLoaded", loaded, false);
+			//document.addEventListener("DOMContentLoaded", loaded, false);
 		}
 		function onDeviceReady() {
 
@@ -86,8 +86,8 @@
 
 	
 		//after DOM Loaded
-		function loaded() {
-			alert('DOM Loaded 1');
+		function loaded2() {
+			alert('DOM Loaded 2');
 			var image_list_temp = "";
 			var download_list_temp = "";
 			$.each( image_list, function( i, val ){
@@ -97,9 +97,6 @@
 				download_list_temp = download_list_temp + "<br/>" + "download Index #" + i + ": " + val ;
 			});
 			$("#result_download").html(image_list_temp + download_list_temp);
-		}
-		function loaded2() {
-			alert('DOM Loaded 2');		
 		}
 	</script>
 	<style>
