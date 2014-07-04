@@ -28,7 +28,10 @@
 	</script>
 -->
 
-	<script type="text/javascript">
+	<script type="text/javascript">	
+		var image_list = new Array();
+		var download_list = new Array();
+		
 		function GapFileSuccess(){
 				//alert("we have some problem");
 		}
@@ -69,8 +72,7 @@
 			//checkConnection();
 
 			
-			var image_list = new Array();
-			var download_list = new Array();
+
 			GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp", "test768");
 			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110");
 			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp", "test111");
@@ -96,7 +98,7 @@
 			$.each( download_list, function( i, val ){
 				download_list_temp = download_list_temp + "<br/>" + "download Index #" + i + ": " + val ;
 			});
-			$("#result_download").html("test :<br/>"image_list_temp + download_list_temp);
+			$("#result_download").html("test :<br/>" + image_list_temp + download_list_temp);
 		}
 	</script>
 	<style>
