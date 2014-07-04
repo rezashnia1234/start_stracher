@@ -34,6 +34,7 @@
 		}
 		function init() {
 			document.addEventListener("deviceready", onDeviceReady, false);
+			document.addEventListener("DOMContentLoaded", loaded, false);
 		}
 		function onDeviceReady() {
 
@@ -86,11 +87,7 @@
 	
 		//after DOM Loaded
 		function loaded() {
-			console.log('DOM Loaded 1');
-
-		}
-		function loaded2() {
-			console.log('DOM Loaded 2');
+			alert('DOM Loaded 1');
 			var image_list_temp = "";
 			var download_list_temp = "";
 			$.each( image_list, function( i, val ){
@@ -101,7 +98,9 @@
 			});
 			$("#result_download").html(image_list_temp + download_list_temp);
 		}
-		document.addEventListener('DOMContentLoaded', loaded, false);
+		function loaded2() {
+			alert('DOM Loaded 2');		
+		}
 	</script>
 	<style>
 		#main{
