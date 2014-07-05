@@ -127,11 +127,13 @@ function GetSavedFile(File_URL,Folder_Name) {
 					cache_file_address = File_URL;
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + "img/blank.png");
 					//download_list.push(File_URL);
-					window.localStorage.setItem('download_list_text',"");
+					download_list_text_temp = window.localStorage.getItem('download_list_text');
+					window.localStorage.setItem('download_list_text',download_list_text_temp + '; -,' + File_URL);
 				}
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile is_fileExists False : ' + File_URL);
 			}
-			window.localStorage.setItem('image_list_text',cache_file_address + '; -,');
+			image_list_text_temp = window.localStorage.getItem('image_list_text');
+			window.localStorage.setItem('image_list_text',image_list_text_temp + '; -,' + cache_file_address);
 		}
 		function fileDownloadProblem(){
 				alert("we have some problem");
