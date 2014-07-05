@@ -89,7 +89,10 @@ var ShowSavedImage = function(Imagename){
 */
 chach_file_address = "test";
 function GetSavedFile(File_URL,Folder_Name) {
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile STRAT : ' + File_URL + "//////" + Folder_Name);
+
 	File_Name = $.md5(File_URL);
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile File_Name : ' + File_Name);
 /*
 	chach_file_address = "";
 	//step to request a file system 
@@ -136,6 +139,7 @@ function GetSavedFile(File_URL,Folder_Name) {
 */
 	download_list.push(File_Name);
 	image_list.push(chach_file_address);
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile END ');
 }
 
 
