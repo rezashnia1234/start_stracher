@@ -90,7 +90,7 @@ var ShowSavedImage = function(Imagename){
 chach_file_address = "test";
 function GetSavedFile(File_URL,Folder_Name) {
 	File_Name = $.md5(File_URL);
-
+/*
 	chach_file_address = "";
 	//step to request a file system 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
@@ -133,8 +133,8 @@ function GetSavedFile(File_URL,Folder_Name) {
 		chach_file_address = File_URL;
 	}
 
-	
-	//download_list.push(File_Name);
+*/
+	download_list.push(File_Name);
 	image_list.push(chach_file_address);
 }
 
