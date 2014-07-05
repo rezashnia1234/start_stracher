@@ -122,10 +122,9 @@ function GetSavedFile(File_URL,Folder_Name) {
 				if (networkState == Connection.NONE) {
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile no internet : ' + "img/blank.png");
 					cache_file_address = "img/blank.png";
-					window.localStorage.setItem('download_list_text',File_URL + '; -,');
 				} else {
 					cache_file_address = File_URL;
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + "img/blank.png");
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + cache_file_address);
 					//download_list.push(File_URL);
 					download_list_text_temp = window.localStorage.getItem('download_list_text');
 					window.localStorage.setItem('download_list_text',download_list_text_temp + '; -,' + File_URL);
@@ -134,6 +133,7 @@ function GetSavedFile(File_URL,Folder_Name) {
 			}
 			image_list_text_temp = window.localStorage.getItem('image_list_text');
 			window.localStorage.setItem('image_list_text',image_list_text_temp + '; -,' + cache_file_address);
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile image_list_text_temp : ' + image_list_text_temp + '; -,' + cache_file_address);
 		}
 		function fileDownloadProblem(){
 				alert("we have some problem");
