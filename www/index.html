@@ -30,24 +30,10 @@
 -->
 
 	<script type="text/javascript">
-		function checkConnection() {
-			var networkState = navigator.connection.type;
-
-			var states = {};
-			states[Connection.UNKNOWN]  = 'Unknown connection';
-			states[Connection.ETHERNET] = 'Ethernet connection';
-			states[Connection.WIFI]     = 'WiFi connection';
-			states[Connection.CELL_2G]  = 'Cell 2G connection';
-			states[Connection.CELL_3G]  = 'Cell 3G connection';
-			states[Connection.CELL_4G]  = 'Cell 4G connection';
-			states[Connection.CELL]     = 'Cell generic connection';
-			states[Connection.NONE]     = 'No network connection';
-
-			alert('Connection type: ' + states[networkState]);
-		}
-	
 		image_list=new Array();
+		image_list_text="";
 		download_list=new Array();
+		download_list_text="";
 
 		
 		function GapFileSuccess(){
@@ -62,7 +48,8 @@
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onDeviceReady');
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
-			window.localStorage.setItem('download_list',"");
+			window.localStorage.setItem('image_list_text',"");
+			window.localStorage.setItem('download_list_text',"");
 
 			//Check if it already exists or not
 			if(applaunchCount){
@@ -79,15 +66,6 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    first run');
 				$("#result").html('first run');
 			}
-			/*
-				function test() {}
-
-				if (test())
-				   console.log('true');
-				else  
-				   console.log('false')
-			*/
-			checkConnection();
 
 			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile sprites.png');
@@ -101,8 +79,12 @@
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');
 			//alert("hey :"+cache_file_address);
 			
-			window.localStorage.setItem('download_list',download_list.join('; -,'));
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list ' + download_list.join('; -,'));
+			//window.localStorage.setItem('download_list_text',download_list_text.join('; -,'));
+			image_list_text = window.localStorage.getItem('image_list_text');
+			image_list = image_list_text.split('; -,');
+			download_list_text = window.localStorage.getItem('download_list_text');
+			download_list = download_list_text.split('; -,');
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_text ' + download_list_text);
 			//temp
 			
 			var image_list_temp = "";
@@ -122,15 +104,13 @@
 			
 			
 			
-			
-			download_list2 = window.localStorage.getItem('download_list');
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list2);
+			download_list_text = window.localStorage.getItem('download_list_text');
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
 
 			//alert(download_list2);
-			if(download_list2){
-				download_list3 = download_list2.split('; -,')
-				
-				$.each( download_list3, function( i, val ){
+			if(download_list_text){
+				download_list = download_list_text.split('; -,');
+				$.each( download_list, function( i, val ){
 					DownloadFile(val, "temp", $.md5(val)  );
 					//alert(val);
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
