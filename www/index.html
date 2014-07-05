@@ -12,8 +12,9 @@
 	
 	<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
 	<script src="phonegap.js" type="text/javascript"></script>
+	<script src="js/jquery.md5.js" type="text/javascript"></script>
 	<script src="js/fastclick.js" type="text/javascript"></script>
-	<script src="js/gapfile.js" type="text/javascript"></script>
+	<script src="js/gapfile.js0" type="text/javascript"></script>
 	<script src="js/download_cache.js" type="text/javascript"></script>
 <!--
   <script type="text/javascript">
@@ -28,9 +29,10 @@
 	</script>
 -->
 
-	<script type="text/javascript">	
-		var image_list = new Array();
-		var download_list = new Array();
+	<script type="text/javascript">
+		image_list=new Array();
+		download_list=new Array();
+
 		
 		function GapFileSuccess(){
 				//alert("we have some problem");
@@ -40,10 +42,10 @@
 			//document.addEventListener("DOMContentLoaded", loaded, false);
 		}
 		function onDeviceReady() {
-
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
-			
+			window.localStorage.setItem('download_list',"");
+
 			//Check if it already exists or not
 			if(applaunchCount){
 				var temp = parseInt(applaunchCount2, 10);
@@ -73,25 +75,18 @@
 
 			
 
-			GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp", "test768");
-			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110");
-			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp", "test111");
-			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", "test110");
+			GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp");
+			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
+			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp");
+			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
+			//alert("hey :"+chach_file_address);
 			
+			window.localStorage.setItem('download_list',download_list.join('; -,'));
+			//temp
 			
-		}
-	
-	
-	
-	
-	
-
-	
-		//after DOM Loaded
-		function loaded2() {
-			alert('DOM Loaded 2');
 			var image_list_temp = "";
 			var download_list_temp = "";
+
 			$.each( image_list, function( i, val ){
 				image_list_temp = image_list_temp + "<br/>" + "image Index #" + i + ": " + val ;
 			});
@@ -99,6 +94,28 @@
 				download_list_temp = download_list_temp + "<br/>" + "download Index #" + i + ": " + val ;
 			});
 			$("#result_download").html("test :<br/>" + image_list_temp + download_list_temp);
+		}
+	
+	
+
+	
+	
+
+		//after DOM Loaded
+		function loaded2() {
+			//alert('DOM Loaded 2');
+
+			download_list2 = window.localStorage.getItem('download_list');
+			//alert(download_list2);
+			if(download_list2){
+				download_list3 = download_list2.split('; -,')
+				
+				$.each( download_list3, function( i, val ){
+					DownloadFile(val, "temp", $.md5(val)  );
+					//alert(val);
+				});
+			}
+
 		}
 	</script>
 	<style>
@@ -115,9 +132,10 @@
 		<div id="result" onclick="alert('salam');">start00000000</div>
 		<br/><br/>
 		<div id="result_download" >result_download</div>
+		<!--
 		<img style="height:600px;" id="smallImage" src="cdvfile://localhost/persistent/Pictures/test768.png" />
-		<img style="height:600px;"  src="http://cdn.sstatic.net/stackoverflow/img/sprites.png" />
-		
+		<img style="height:600px;"  			   src="http://cdn.sstatic.net/stackoverflow/img/sprites.png" />
+		-->
 		<div id="wrapper" style="width:100%;margin:0;">
 			<p>
 				<a href="00.html" >aaaaaaaaaaaaaaaaaaaaaaaaaa</a>

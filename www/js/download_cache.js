@@ -87,8 +87,10 @@ var ShowSavedImage = function(Imagename){
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
 }
 */
-var chach_file_address;
-function GetSavedFile(File_URL,Folder_Name, File_Name) {
+chach_file_address = "test";
+function GetSavedFile(File_URL,Folder_Name) {
+	File_Name = $.md5(File_URL);
+
 	chach_file_address = "";
 	//step to request a file system 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
@@ -105,13 +107,13 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		function is_fileExists(result){
 			if(result)
 			{
-				alert("File " +  " exists!");
+				//alert("File " +  " exists!");
 				chach_file_address = fp;
 			}
 			else
 			{
 				//fileDoesNotExist
-				alert("file does not exist");
+				//alert("file does not exist");
 				//DownloadFile(File_URL, Folder_Name, File_Name);
 				chach_file_address = File_URL;
 				download_list.push(File_URL);
@@ -130,8 +132,10 @@ function GetSavedFile(File_URL,Folder_Name, File_Name) {
 		alert(evt.target.error.code);
 		chach_file_address = File_URL;
 	}
+
 	
-	list.push(chach_file_address);
+	//download_list.push(File_Name);
+	image_list.push(chach_file_address);
 }
 
 
