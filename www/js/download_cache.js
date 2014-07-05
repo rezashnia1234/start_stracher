@@ -87,14 +87,13 @@ var ShowSavedImage = function(Imagename){
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, onFail);
 }
 */
-chach_file_address = "test";
+cache_file_address = "test";
 function GetSavedFile(File_URL,Folder_Name) {
 	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile STRAT : ' + File_URL + "//////" + Folder_Name);
 
 	File_Name = $.md5(File_URL);
-	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile File_Name : ' + File_Name);
-/*
-	chach_file_address = "";
+
+	cache_file_address = "";
 	//step to request a file system 
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
@@ -111,20 +110,32 @@ function GetSavedFile(File_URL,Folder_Name) {
 			if(result)
 			{
 				//alert("File " +  " exists!");
-				chach_file_address = fp;
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile is_fileExists true : ' + fp);
+				cache_file_address = fp;
 			}
 			else
 			{
 				//fileDoesNotExist
 				//alert("file does not exist");
 				//DownloadFile(File_URL, Folder_Name, File_Name);
-				chach_file_address = File_URL;
-				download_list.push(File_URL);
+				var networkState = navigator.connection.type;
+				if (networkState == Connection.NONE) {
+					cache_file_address = "img/blank.png";
+				} else {
+					cache_file_address = File_URL;
+					download_list.push(File_URL);
+				}
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile is_fileExists False : ' + File_URL);
 			}
 		}
 		function fileDownloadProblem(){
 				alert("we have some problem");
-				chach_file_address = File_URL;
+				var networkState = navigator.connection.type;
+				if (networkState == Connection.NONE) {
+					cache_file_address = "img/blank.png";
+				} else {
+					cache_file_address = File_URL;
+				}
 		}	
 
 		GapFile.fileExists(Folder_Name + "/" + File_Name + "." + ext, is_fileExists, fileDownloadProblem);
@@ -133,12 +144,15 @@ function GetSavedFile(File_URL,Folder_Name) {
 	function fileSystemFail_fileSystemSuccess_GetSavedFile(evt) {
 		//Unable to access file system
 		alert(evt.target.error.code);
-		chach_file_address = File_URL;
+		var networkState = navigator.connection.type;
+		if (networkState == Connection.NONE) {
+			cache_file_address = "img/blank.png";
+		} else {
+			cache_file_address = File_URL;
+		}
 	}
 
-*/
-	download_list.push(File_Name);
-	image_list.push(chach_file_address);
+	image_list.push(cache_file_address);
 	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile END ');
 }
 
