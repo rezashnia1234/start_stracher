@@ -103,6 +103,23 @@
 			});
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp all ' + image_list_temp);
 			$("#result_download").html("test :<br/>" + image_list_temp + download_list_temp);
+			
+			
+			
+			
+			download_list2 = window.localStorage.getItem('download_list');
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list2);
+
+			//alert(download_list2);
+			if(download_list2){
+				download_list3 = download_list2.split('; -,')
+				
+				$.each( download_list3, function( i, val ){
+					//DownloadFile(val, "temp", $.md5(val)  );
+					//alert(val);
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    DownloadFile : ' + val);
+				});
+			}
 		}
 	
 	
@@ -115,18 +132,7 @@
 			//alert('DOM Loaded 2');
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    DOM Loaded 2');
 
-			download_list2 = window.localStorage.getItem('download_list');
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list2);
 
-			//alert(download_list2);
-			if(download_list2){
-				download_list3 = download_list2.split('; -,')
-				
-				$.each( download_list3, function( i, val ){
-					//DownloadFile(val, "temp", $.md5(val)  );
-					alert(val);
-				});
-			}
 
 		}
 	</script>
