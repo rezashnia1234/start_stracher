@@ -153,7 +153,7 @@ function GetSavedFile(File_URL,Folder_Name) {
 	}
 
 	image_list.push(cache_file_address);
-	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile END ');
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile END ' + cache_file_address);
 }
 
 
