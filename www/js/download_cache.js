@@ -120,9 +120,11 @@ function GetSavedFile(File_URL,Folder_Name) {
 				//DownloadFile(File_URL, Folder_Name, File_Name);
 				var networkState = navigator.connection.type;
 				if (networkState == Connection.NONE) {
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile no internet : ' + "img/blank.png");
 					cache_file_address = "img/blank.png";
 				} else {
 					cache_file_address = File_URL;
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + "img/blank.png");
 					download_list.push(File_URL);
 				}
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile is_fileExists False : ' + File_URL);
