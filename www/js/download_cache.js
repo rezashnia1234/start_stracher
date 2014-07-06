@@ -28,6 +28,7 @@ function download(URL, Folder_Name, File_Name) {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
 
 	function fileSystemSuccess(fileSystem) {
+		var ext = "";
 		var download_link = encodeURI(URL);
 		ext = download_link.substr(download_link.lastIndexOf('.') + 1); //Get extension of URL
 
@@ -98,6 +99,7 @@ function GetSavedFile(File_URL,Folder_Name) {
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_GetSavedFile, fileSystemFail_fileSystemSuccess_GetSavedFile);
 
 	function fileSystemSuccess_GetSavedFile(fileSystem) {
+		var ext = "";
 		var rootdir = fileSystem.root;
 		var fp = rootdir.toURL(); // Returns Fulpath of local directory
 		
@@ -124,7 +126,7 @@ function GetSavedFile(File_URL,Folder_Name) {
 					cache_file_address = "img/blank.png";
 				} else {
 					cache_file_address = File_URL;
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + cache_file_address);
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + cache_file_address + "////fp : " + fp);
 					//download_list.push(File_URL);
 					download_list_text_temp = window.localStorage.getItem('download_list_text');
 					window.localStorage.setItem('download_list_text',download_list_text_temp + '; -,' + File_URL);
