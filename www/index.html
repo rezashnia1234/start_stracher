@@ -72,7 +72,7 @@
 			
 
 
-			function StartMakeImageList() {			
+			function StartMakeImageList(next) {			
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile sprites.png');
 				GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp");
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
@@ -81,9 +81,10 @@
 				GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp");
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
 				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');			
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');
+				next();				
 			}
-			function StartShowList() {
+			function StartShowList(next) {
 				//window.localStorage.setItem('download_list_text',download_list_text.join('; -,'));
 				image_list_text = window.localStorage.getItem('image_list_text');
 				image_list = image_list_text.split('; -,');
@@ -106,8 +107,9 @@
 				});
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp all ' + image_list_temp);
 				$("#result_download").html("test :<br/>" + image_list_temp + download_list_temp);
+				next();
 			}
-			function StartDownload() {
+			function StartDownload(next) {
 				download_list_text = window.localStorage.getItem('download_list_text');
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
 
@@ -120,6 +122,7 @@
 						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
 					});
 				}
+				next();
 			}
 			$('#temp').queue(StartMakeImageList).queue(StartShowList).queue(StartDownload);
 			
