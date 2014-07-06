@@ -124,7 +124,7 @@
 				}
 				next();
 			}
-			$('#temp').queue(StartMakeImageList).queue(StartShowList).queue(StartDownload);
+			$('#temp').queue(StartMakeImageList).delay( 1500 ).queue(StartShowList).queue(StartDownload);
 			
 			
 		}
