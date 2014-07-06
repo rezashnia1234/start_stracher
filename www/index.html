@@ -45,6 +45,8 @@
 			//document.addEventListener("DOMContentLoaded", loaded, false);
 		}
 		function onDeviceReady() {
+			FastClick.attach(document.body);
+			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onDeviceReady');
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
@@ -68,54 +70,60 @@
 			}
 
 			
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile sprites.png');
-			GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp");
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
-			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt');
-			GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp");
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
-			GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');
-			//alert("hey :"+cache_file_address);
-			
-			//window.localStorage.setItem('download_list_text',download_list_text.join('; -,'));
-			image_list_text = window.localStorage.getItem('image_list_text');
-			image_list = image_list_text.split('; -,');
-			download_list_text = window.localStorage.getItem('download_list_text');
-			download_list = download_list_text.split('; -,');
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_text : ' + download_list_text);
-			//temp
-			
-			var image_list_temp = "";
-			var download_list_temp = "";
 
-			$.each( image_list, function( i, val ){
-				image_list_temp = image_list_temp + "<br/>" + "image Index #" + i + ": " + val ;
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_temp add ' + val);
-			});
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_temp all ' + image_list_temp);
-			$.each( download_list, function( i, val ){
-				download_list_temp = download_list_temp + "<br/>" + "download Index #" + i + ": " + val ;
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp add ' + val);
-			});
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp all ' + image_list_temp);
-			$("#result_download").html("test :<br/>" + image_list_temp + download_list_temp);
-			
-			
-			
-			download_list_text = window.localStorage.getItem('download_list_text');
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
 
-			//alert(download_list2);
-			if(download_list_text){
-				download_list = download_list_text.split('; -,');
-				$.each( download_list, function( i, val ){
-					DownloadFile(val, "temp", $.md5(val)  );
-					//alert(val);
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
-				});
+			function StartMakeImageList() {			
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile sprites.png');
+				GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp");
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
+				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt');
+				GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp");
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
+				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');			
 			}
+			function StartShowList() {
+				//window.localStorage.setItem('download_list_text',download_list_text.join('; -,'));
+				image_list_text = window.localStorage.getItem('image_list_text');
+				image_list = image_list_text.split('; -,');
+				download_list_text = window.localStorage.getItem('download_list_text');
+				download_list = download_list_text.split('; -,');
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_text : ' + download_list_text);
+				//temp
+				
+				var image_list_temp = "";
+				var download_list_temp = "";
+
+				$.each( image_list, function( i, val ){
+					image_list_temp = image_list_temp + "<br/>" + "image Index #" + i + ": " + val ;
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_temp add ' + val);
+				});
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_temp all ' + image_list_temp);
+				$.each( download_list, function( i, val ){
+					download_list_temp = download_list_temp + "<br/>" + "download Index #" + i + ": " + val ;
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp add ' + val);
+				});
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp all ' + image_list_temp);
+				$("#result_download").html("test :<br/>" + image_list_temp + download_list_temp);
+			}
+			function StartDownload() {
+				download_list_text = window.localStorage.getItem('download_list_text');
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
+
+				//alert(download_list2);
+				if(download_list_text){
+					download_list = download_list_text.split('; -,');
+					$.each( download_list, function( i, val ){
+						DownloadFile(val, "temp", $.md5(val)  );
+						//alert(val);
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
+					});
+				}
+			}
+			$('#temp').queue(StartMakeImageList).queue(StartShowList).queue(StartDownload);
+			
+			
 		}
 	
 	
@@ -140,6 +148,7 @@
 	</style>
 </head>
 <body onload="init()">
+	<div id="temp"></div>
 	<div id="main">
 	<br/><br/><br/><br/><br/><br/><br/>
 
