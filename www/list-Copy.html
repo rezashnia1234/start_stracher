@@ -27,6 +27,12 @@
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
 			document.addEventListener("deviceready", onDeviceReady, false);
 
+
+
+		}
+		function onDeviceReady() {
+			FastClick.attach(document.body);
+
 			$('.c2').dotdotdot();
 			$('.c3').dotdotdot();
 			$('#dataTable-list').dataTable( {
@@ -47,12 +53,6 @@
 			        },
 			        "aLengthMenu": [[4,10, 25, 50, -1], [4,10, 25, 50, "همه"]],
 			} );
-
-		}
-		function onDeviceReady() {
-			FastClick.attach(document.body);
-
-
 		}
 	</script>
 </head>
