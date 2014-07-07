@@ -62,14 +62,14 @@
 		function GapFileSuccess(){
 				//alert("we have some no problem");
 		}
-		function init() {
-			blockui();
-			
+		function init() {			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
 			document.addEventListener("deviceready", onDeviceReady, false);
 			//document.addEventListener("DOMContentLoaded", loaded, false);
 		}
 		function onDeviceReady() {
+
+
 			FastClick.attach(document.body);
 			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onDeviceReady');
@@ -176,6 +176,8 @@
 	</style>
 </head>
 <body onload="init()">
+	<script>blockui();</script>
+
 	<div id="temp"></div>
 	<div id="main">
 	<br/><br/><br/><br/><br/><br/><br/>
