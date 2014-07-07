@@ -74,13 +74,13 @@
 
 			function StartMakeImageList(next) {			
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 139304141755349c3.jpg');
-				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/139304141755349c3.jpg", "temp");
+				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/139304141755349c3.jpg", "temp", $.md5("http://farsi.khamenei.ir/ndata/home/1393/139304141755349c3.jpg")  );
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile sprites.png');
-				GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp");
+				GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp", $.md5("http://cdn.sstatic.net/stackoverflow/img/sprites.png")  );
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt');
-				GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp");
+				GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp", $.md5("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt")  );
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
-				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp");
+				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", $.md5("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg")  );
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');
 				next();				
 			}
