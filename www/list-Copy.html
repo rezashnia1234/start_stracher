@@ -5,6 +5,7 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
 
 	<title>DataTables example - Default ordering (sorting)</title>
+	<link rel="stylesheet" href="css/reset.css" type="text/css" /> 
 	<link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
 	<link rel="stylesheet" type="text/css" href="css/yekan.css">
 
@@ -26,11 +27,6 @@
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
 			document.addEventListener("deviceready", onDeviceReady, false);
 
-
-		}
-		function onDeviceReady() {
-			FastClick.attach(document.body);
-
 			$('.c2').dotdotdot();
 			$('.c3').dotdotdot();
 			$('#dataTable-list').dataTable( {
@@ -51,6 +47,12 @@
 			        },
 			        "aLengthMenu": [[4,10, 25, 50, -1], [4,10, 25, 50, "همه"]],
 			} );
+
+		}
+		function onDeviceReady() {
+			FastClick.attach(document.body);
+
+
 		}
 	</script>
 </head>
@@ -91,10 +93,11 @@
   width: auto;
 }
 *{
-	font-family:web_Yekan,tahoma;
+	font-family:web_Yekan,tahoma !important;
 	font-size:13px;
 }
 a{text-decoration:none;}
+.container{padding:20px;}
 /*.dataTables_length{display: none;}*/
 </style>
 

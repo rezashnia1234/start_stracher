@@ -11,20 +11,20 @@ fieldset, form, label, legend{
 	padding: 0;
 	border: 0;
 	outline: 0;
-	font-size: 100%;
+	/*font-size: 100%;*/
 	vertical-align: baseline;
 	background: transparent;
-	line-height:170%;
+	/*line-height:170%;*/
 	font-family:Tahoma;
 	font-size:13px;
 }
 table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	outline: 0;
-	font-size: 100%;
+	/*font-size: 100%;*/
 	vertical-align: baseline;
 	background: transparent;
-	line-height:170%;
+	/*line-height:170%;*/
 	font-family:Tahoma;
 	font-size:13px;
 }
@@ -57,8 +57,8 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
-* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-*:focus { outline: none; }
+/** { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+*:focus { outline: none; }*/
 *::-moz-focus-inner ,
 *::-o-focus-inner{ border: none;}
 
