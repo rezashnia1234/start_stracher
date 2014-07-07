@@ -25,7 +25,14 @@
 		function init() {			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
 			document.addEventListener("deviceready", onDeviceReady, false);
-			
+
+
+		}
+		function onDeviceReady() {
+			FastClick.attach(document.body);
+
+			$('.c2').dotdotdot();
+			$('.c3').dotdotdot();
 			$('#dataTable-list').dataTable( {
 			        "oLanguage": {
 			            "sProcessing": "درحال پردازش اطلاعات",
@@ -43,15 +50,6 @@
 						}
 			        },
 			        "aLengthMenu": [[4,10, 25, 50, -1], [4,10, 25, 50, "همه"]],
-			} );
-			$('.c2').dotdotdot();
-			$('.c3').dotdotdot();
-		}
-		function onDeviceReady() {
-			FastClick.attach(document.body);
-
-			$('#dataTable-list').dataTable( {
-				//"order": [[ 3, "desc" ]]
 			} );
 		}
 	</script>

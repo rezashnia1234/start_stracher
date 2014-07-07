@@ -9,81 +9,88 @@
 <title>Mobile Slide Out Menu</title>
 
 <script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="phonegap.js" type="text/javascript"></script>
 <script src="js/hammer-touch-script.js"></script>
 
 <script>
+		function init() {			
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
+			document.addEventListener("deviceready", onDeviceReady, false);
 
-$(document).ready(function(e) {
-	
-	var startX, curX, startY, curY; // Variables
-	var newXScroll, newYScroll, genXScroll; // More Variables!
-	
-	// Change the height of the sidebar, as well as a few things to do with the main content area, so the user
-	// can actually scroll in the content area.
-	function sideBarHeight() { 
-	
-		var docHeight = $(document).height();
-		var winHeight = $(window).height();
-		
-		$('.slide-in').height(winHeight);
-		$('#main-container').height(winHeight);
-		$('#sub-container').height($('#sub-container').height());
-	} 
-	
-	sideBarHeight();
-	
-	var outIn = 'in';
-	
-	Hammer(document.getElementById('main-container')).on('swiperight', function(e) {
-			$('.slide-in').toggleClass('on');		
-			$('#main-container').toggleClass('on');
-			outIn = 'out';
-			
-	});
-	
-	Hammer(document.getElementById('main-container')).on('swipeleft', function(e) {
-			$('.slide-in').toggleClass('on');	
-			$('#main-container').toggleClass('on');
-			outIn = 'in';
-	});
-	
-	
-	function runAnimation() {
-	
-		if(outIn == 'out') {
-			
-			$('.slide-in').toggleClass('on');
-			$('#main-container').toggleClass('on');	
-			outIn = 'in';
-			
-		} else if(outIn == 'in') {
-		
-			$('.slide-in').toggleClass('on');	
-			$('#main-container').toggleClass('on');	
-			outIn = 'out';
-			
+
 		}
+		function onDeviceReady() {
+			FastClick.attach(document.body);
 	
-	}
-	
-	$('.menu-icon')[0].addEventListener('touchend', function(e) {
-		$('.slide-in').toggleClass('on');		
-		$('#main-container').toggleClass('on');
-	});
-	
-	$('.menu-icon').click(function() {
-		$('.slide-in').toggleClass('on');		
-		$('#main-container').toggleClass('on');
-	});
-	
-	
+			var startX, curX, startY, curY; // Variables
+			var newXScroll, newYScroll, genXScroll; // More Variables!
+			
+			// Change the height of the sidebar, as well as a few things to do with the main content area, so the user
+			// can actually scroll in the content area.
+			function sideBarHeight() { 
+			
+				var docHeight = $(document).height();
+				var winHeight = $(window).height();
+				
+				$('.slide-in').height(winHeight);
+				$('#main-container').height(winHeight);
+				$('#sub-container').height($('#sub-container').height());
+			} 
+			
+			sideBarHeight();
+			
+			var outIn = 'in';
+			
+			Hammer(document.getElementById('main-container')).on('swiperight', function(e) {
+					$('.slide-in').toggleClass('on');		
+					$('#main-container').toggleClass('on');
+					outIn = 'out';
+					
+			});
+			
+			Hammer(document.getElementById('main-container')).on('swipeleft', function(e) {
+					$('.slide-in').toggleClass('on');	
+					$('#main-container').toggleClass('on');
+					outIn = 'in';
+			});
+			
+			
+			function runAnimation() {
+			
+				if(outIn == 'out') {
+					
+					$('.slide-in').toggleClass('on');
+					$('#main-container').toggleClass('on');	
+					outIn = 'in';
+					
+				} else if(outIn == 'in') {
+				
+					$('.slide-in').toggleClass('on');	
+					$('#main-container').toggleClass('on');	
+					outIn = 'out';
+					
+				}
+			
+			}
+			
+			$('.menu-icon')[0].addEventListener('touchend', function(e) {
+				$('.slide-in').toggleClass('on');		
+				$('#main-container').toggleClass('on');
+			});
+			
+			$('.menu-icon').click(function() {
+				$('.slide-in').toggleClass('on');		
+				$('#main-container').toggleClass('on');
+			});
+			
+			
 
-});
+		});
 
 </script>
 
 </head>
-<body>
+<body onload="init()">
 
 <div id="main-container" class="tk-chaparral-pro">
 	<div id="sub-container">
@@ -96,7 +103,7 @@ $(document).ready(function(e) {
 			</div>
 			
 			<div class="travel">
-				<a href="index.html">&laquo; Back to the Article</a>
+				
 			</div>
 			
 		</div>
@@ -106,8 +113,7 @@ $(document).ready(function(e) {
 				Try it out on Mobile! (Demo 2)
 			</div>
 			<div class="demo-bar">
-				<a href="http://inserthtml.com/demo/mobile/menu/index-1.html">Demo 1</a>
-				<a href="http://inserthtml.com/demo/mobile/menu/index-2.html">Demo 2</a>
+				<a href="index.html">&laquo; Back to the Article</a>
 			</div>
 		</div>
 	</div>	
