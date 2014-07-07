@@ -11,6 +11,14 @@
 	<script src="js/jquery-1.8.2.min.js" type="text/javascript"></script>
 	<script src="js/fastclick.js" type="text/javascript"></script>
 	<script type="text/javascript" src="phonegap.js"></script>
+	<script type="text/javascript">
+		function init() {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			FastClick.attach(document.body);
+		}
+	</script>
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<style>
 		#main{
@@ -20,7 +28,7 @@
 	</style>
   </head>
 <!--<body onload="OnLoad();">-->
-<body style="margin:0;">
+<body onload="init()"  style="margin:0;">
 	<div id="main">
 		<br/><br/><br/><br/><br/><br/><br/>
 		<a href="index.html" >BBBBBBBBBBBBBBBBB</a>

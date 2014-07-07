@@ -4,6 +4,7 @@
 	<meta name="format-detection" content="telephone-no">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=medium-dpi" />
 
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<link rel="stylesheet" href="css/reset.css" type="text/css" /> 
@@ -14,6 +15,7 @@
 	<script src="phonegap.js" type="text/javascript"></script>
 	<script src="js/jquery.md5.js" type="text/javascript"></script>
 	<script src="js/fastclick.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery.blockUI.js"></script>
 	<script src="js/gapfile.js" type="text/javascript"></script>
 	<script src="js/download_cache.js" type="text/javascript"></script>
 <!--
@@ -35,11 +37,35 @@
 		download_list=new Array();
 		download_list_text="";
 
-		
+////////////////////////////////////////////////////////////////////////////////////////////
+// START preloader ://///////////////////////////////////////////////////////////
+		function blockui() {
+			$.blockUI({
+				message: '<img src="img/preloader.gif"/>',
+				css: {
+					color: '#fff',
+					backgroundColor: '#fff',
+					border: 'none'
+				},
+				overlayCSS: {
+					backgroundColor: '#fff',
+					opacity: 1
+				}
+			});
+		}
+		function unblockui() {
+			$.unblockUI();
+			next();
+		}
+// END preloader ://///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
 		function GapFileSuccess(){
 				//alert("we have some no problem");
 		}
 		function init() {
+			blockui();
+			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
 			document.addEventListener("deviceready", onDeviceReady, false);
 			//document.addEventListener("DOMContentLoaded", loaded, false);
@@ -124,7 +150,7 @@
 				}
 				next();
 			}
-			$('#temp').queue(StartMakeImageList).delay( 1500 ).queue(StartShowList).queue(StartDownload);
+			$('#temp').queue(StartMakeImageList).delay( 1500 ).queue(StartShowList).queue(unblockui).queue(StartDownload);
 			
 			
 		}
