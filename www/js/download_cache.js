@@ -90,7 +90,7 @@ var ShowSavedImage = function(Imagename){
 */
 cache_file_address = "test";
 function GetSavedFile(File_URL,Folder_Name,File_Name) {
-	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile STRAT : ' + File_URL + "//////" + Folder_Name);
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile STRAT : ' + File_URL + "//////" + File_Name + "//////" + $.md5(File_URL));
 
 	//File_Name = $.md5(File_URL);
 
