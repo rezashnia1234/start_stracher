@@ -122,8 +122,8 @@ function GetSavedFile(File_URL,Folder_Name,File_Name) {
 				//DownloadFile(File_URL, Folder_Name, File_Name);
 				var networkState = navigator.connection.type;
 				if (networkState == Connection.NONE) {
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile no internet : ' + "img/blank.png");
-					cache_file_address = "img/blank.png";
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile no internet : ' + "images/blank.png");
+					cache_file_address = "images/blank.png";
 				} else {
 					cache_file_address = File_URL;
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + cache_file_address + "////fp : " + fp);
@@ -149,7 +149,7 @@ function GetSavedFile(File_URL,Folder_Name,File_Name) {
 		alert(evt.target.error.code);
 		var networkState = navigator.connection.type;
 		if (networkState == Connection.NONE) {
-			cache_file_address = "img/blank.png";
+			cache_file_address = "images/blank.png";
 		} else {
 			cache_file_address = File_URL;
 		}
