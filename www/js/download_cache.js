@@ -136,6 +136,7 @@ function GetSavedFile(File_URL,Folder_Name,File_Name) {
 			image_list_text_temp = window.localStorage.getItem('image_list_text');
 			window.localStorage.setItem('image_list_text',image_list_text_temp + '; -,' + cache_file_address);
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile image_list_text_temp : ' + image_list_text_temp + '; -,' + cache_file_address);
+			return cache_file_address;
 		}
 		function fileDownloadProblem(){
 				alert("we have some problem");

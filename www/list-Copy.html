@@ -80,7 +80,7 @@
 		}
 		function MakeDataTableContent(next) {
 			var output='';
-			$.each(data.posts,function(key,val) {
+			$.each(articles.posts,function(key,val) {
 				output += '<tr><td class="c1 c_list" ><a href="news_content.html?id=' + val.id + '">';
 				output += (val.thumbnail) ?
 					'<img src="' + val.thumbnail + '"  width="75" height="92" /></a></td>':
@@ -146,7 +146,7 @@
 			document.addEventListener("deviceready", onDeviceReady, false);
 
 
-			onDeviceReady();
+			//onDeviceReady();
 		}
 		function onDeviceReady() {
 			FastClick.attach(document.body);
