@@ -145,7 +145,7 @@
 
 				} else {
 					download_list = download_list_text.split('; -,');
-					download_list = unique_array(download_list);
+					//download_list = unique_array(download_list);
 					$.each( download_list, function( i, val ){
 						DownloadFile(val, "temp", $.md5(val)  );
 						//alert(val);
