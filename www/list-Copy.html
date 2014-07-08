@@ -23,8 +23,13 @@
 	<script src="js/jquery.dotdotdot.min.js" type="text/javascript" language="javascript" ></script>
 
 	<script type="text/javascript" language="javascript" class="init">
+		image_list=new Array();
+		image_list_text="";
+		download_list=new Array();
+		download_list_text="";
+		articles = "";
 ////////////////////////////////////////////////////////////////////////////////////////////
-// START preloader ://///////////////////////////////////////////////////////////
+// START preloader :///////////////////////////////////////////////////////////////////////
 		function blockui() {
 			$.blockUI({
 				message: '<img src="images/preloader.gif"/>',
@@ -42,10 +47,12 @@
 		function unblockui() {
 			$.unblockUI();
 		}
-// END preloader ://///////////////////////////////////////////////////////////
+// END preloader ://////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
-		function MakeDataTableContent(next) {
-			var	articles = "";
+		function GapFileSuccess(){
+				//alert("we have some no problem");
+		}
+		function StartMakeImageList(next) {
 			$.ajax({
 				url: 'js/articles.json',
 				crossDomain: true,
@@ -55,25 +62,42 @@
 				.fail(function (jqXHR, textStatus, errorThrown) { console.log(textStatus, errorThrown); alert('Failed to load data.'); })
 				.done(function (data) {
 					var output='';
+					articles = data;
 					$.each(data.posts,function(key,val) {
-						output += '<tr><td class="c1 c_list" ><a href="news_content.html?id=' + val.id + '">';
-						output += (val.thumbnail) ?
-							'<img src="' + val.thumbnail + '"  width="75" height="92" /></a></td>':
-							'<img src="images/blank.png" width="75" height="92" /></a></td>';
-						output += '<td class="c2 c_list" ><a href="news_content.html?id=' + val.id + '">' + val.title + '</a></td>';
-						output += '<td class="c3 c_list" >' + val.excerpt + '</td>';
-						/*
-						var tempDiv = document.createElement("tempDiv");
-						tempDiv.innerHTML = val.excerpt;
-						$("a",tempDiv).remove();
-						var excerpt = tempDiv.innerHTML;	
-						*/
-						output += '</tr>';
+						if(val.thumbnail!="")
+						{
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile +' + val.thumbnail);
+							GetSavedFile(val.thumbnail, "temp", $.md5(val.thumbnail)  );
+						}
+						else
+						{
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile no image /id=' + val.id);
+						}
 					});
-
-					$('.dataTable-tbody').html(output);
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');
 					next();
-			});	
+			});			
+		}
+		function MakeDataTableContent(next) {
+			var output='';
+			$.each(data.posts,function(key,val) {
+				output += '<tr><td class="c1 c_list" ><a href="news_content.html?id=' + val.id + '">';
+				output += (val.thumbnail) ?
+					'<img src="' + val.thumbnail + '"  width="75" height="92" /></a></td>':
+					'<img src="images/blank.png" width="75" height="92" /></a></td>';
+				output += '<td class="c2 c_list" ><a href="news_content.html?id=' + val.id + '">' + val.title + '</a></td>';
+				output += '<td class="c3 c_list" >' + val.excerpt + '</td>';
+				/*
+				var tempDiv = document.createElement("tempDiv");
+				tempDiv.innerHTML = val.excerpt;
+				$("a",tempDiv).remove();
+				var excerpt = tempDiv.innerHTML;	
+				*/
+				output += '</tr>';
+			});
+
+			$('.dataTable-tbody').html(output);
+			next();
 		}
 		function DrawDataTable(next) {
 			$('.c2').dotdotdot();
@@ -102,18 +126,34 @@
 			} );
 			next();
 		}
-		
+		function StartDownload(next) {
+			download_list_text = window.localStorage.getItem('download_list_text');
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
+
+			//alert(download_list2);
+			if(download_list_text){
+				download_list = download_list_text.split('; -,');
+				$.each( download_list, function( i, val ){
+					DownloadFile(val, "temp", $.md5(val)  );
+					//alert(val);
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
+				});
+			}
+			next();
+		}
 		function init() {			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
 			document.addEventListener("deviceready", onDeviceReady, false);
 
 
-			//onDeviceReady();
+			onDeviceReady();
 		}
 		function onDeviceReady() {
 			FastClick.attach(document.body);
-
-			$('#temp').queue(MakeDataTableContent).queue(DrawDataTable);//.delay( 1500 ).queue(StartShowList).queue(unblockui).queue(StartDownload);
+			window.localStorage.setItem('image_list_text',"");
+			window.localStorage.setItem('download_list_text',"");
+			
+			$('#temp').queue(StartMakeImageList).delay( 1500 ).queue(MakeDataTableContent).queue(DrawDataTable).queue(StartDownload);//.delay( 1500 ).queue(StartShowList).queue(unblockui).queue(StartDownload);
 		}
 
 	</script>
@@ -161,7 +201,7 @@
 	/*font-family:web_Yekan,tahoma !important;*/
 	font-size:13px;
 }
-a{text-decoration:none;}
+a,a:visited{text-decoration:none;color:blue;}
 .container{padding:20px;}
 /*.dataTables_length{display: none;}*/
 </style>
