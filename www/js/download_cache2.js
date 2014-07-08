@@ -8,10 +8,10 @@ function unique_array(list) {
 }
 function is_url_in_array(url,image_list) {
 	var ext = "";
-	var File_URL_link = encodeURI(File_URL);
+	var File_URL_link = encodeURI(url);
 	ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1);
 	File_URL_link = $.md5(url) + "." + ext ;
-	if ($.inArray(File_URL_link, result) == -1)
+	if ($.inArray(File_URL_link, image_list) == -1)
 	{
 		var networkState = navigator.connection.type;
 		if (networkState == Connection.NONE) {
