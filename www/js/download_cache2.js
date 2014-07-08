@@ -154,7 +154,7 @@ function GetSavedFile(File_URL,Folder_Name,File_Name) {
 					//download_list.push(File_URL);
 					download_list_text_temp = window.localStorage.getItem('download_list_text');
 					window.localStorage.setItem('download_list_text',download_list_text_temp + '; -,' + File_URL);
-				}
+				//}
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile is_fileExists False : ' + File_URL);
 			}
 			if(cache_file_address)
