@@ -140,18 +140,21 @@
 			download_list_text = window.localStorage.getItem('download_list_text');
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
 			if(download_list_text){
-				var networkState = navigator.connection.type;
-				if (networkState == Connection.NONE) {
+				//var networkState = navigator.connection.type;
+				//if (networkState == Connection.NONE) {
 
-				} else {
+				//} else {
 					download_list = download_list_text.split('; -,');
-					//download_list = unique_array(download_list);
 					$.each( download_list, function( i, val ){
 						DownloadFile(val, "temp", $.md5(val)  );
 						//alert(val);
 						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
 					});
-				}
+					download_list = unique_array(download_list);
+					$.each( download_list, function( i, val ){
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile 222 : ' + val);
+					});
+				//}
 			}
 			next();
 		}
