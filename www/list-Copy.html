@@ -23,16 +23,59 @@
 	<script src="js/jquery.dotdotdot.min.js" type="text/javascript" language="javascript" ></script>
 
 	<script type="text/javascript" language="javascript" class="init">
-		function init() {			
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
-			document.addEventListener("deviceready", onDeviceReady, false);
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////
+// START preloader ://///////////////////////////////////////////////////////////
+		function blockui() {
+			$.blockUI({
+				message: '<img src="images/preloader.gif"/>',
+				css: {
+					color: '#fff',
+					backgroundColor: '#fff',
+					border: 'none'
+				},
+				overlayCSS: {
+					backgroundColor: '#fff',
+					opacity: 1
+				}
+			});
 		}
-		function onDeviceReady() {
-			FastClick.attach(document.body);
+		function unblockui() {
+			$.unblockUI();
+		}
+// END preloader ://///////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+		function MakeDataTableContent(next) {
+			var	articles = "";
+			$.ajax({
+				url: 'js/articles.json',
+				crossDomain: true,
+				jsonpCallback: 'cb',
+				dataType: 'jsonp',
+			})
+				.fail(function (jqXHR, textStatus, errorThrown) { console.log(textStatus, errorThrown); alert('Failed to load data.'); })
+				.done(function (data) {
+					var output='';
+					$.each(data.posts,function(key,val) {
+						output += '<tr><td class="c1 c_list" ><a href="news_content.html?id=' + val.id + '">';
+						output += (val.thumbnail) ?
+							'<img src="' + val.thumbnail + '"  width="75" height="92" /></a></td>':
+							'<img src="images/blank.png" width="75" height="92" /></a></td>';
+						output += '<td class="c2 c_list" ><a href="news_content.html?id=' + val.id + '">' + val.title + '</a></td>';
+						output += '<td class="c3 c_list" >' + val.excerpt + '</td>';
+						/*
+						var tempDiv = document.createElement("tempDiv");
+						tempDiv.innerHTML = val.excerpt;
+						$("a",tempDiv).remove();
+						var excerpt = tempDiv.innerHTML;	
+						*/
+						output += '</tr>';
+					});
 
+					$('.dataTable-tbody').html(output);
+					next();
+			});	
+		}
+		function DrawDataTable(next) {
 			$('.c2').dotdotdot();
 			$('.c3').dotdotdot();
 			$('#dataTable-list').dataTable( {
@@ -52,11 +95,33 @@
 						}
 			        },
 			        "aLengthMenu": [[4,10, 25, 50, -1], [4,10, 25, 50, "همه"]],
+					"fnDrawCallback" : function(oSettings) {
+						// Update the element
+						unblockui();
+					},
 			} );
+			next();
 		}
+		
+		function init() {			
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
+			document.addEventListener("deviceready", onDeviceReady, false);
+
+
+			//onDeviceReady();
+		}
+		function onDeviceReady() {
+			FastClick.attach(document.body);
+
+			$('#temp').queue(MakeDataTableContent).queue(DrawDataTable);//.delay( 1500 ).queue(StartShowList).queue(unblockui).queue(StartDownload);
+		}
+
 	</script>
 </head>
 <body onload="init()">
+	<script>blockui();</script>
+	<div id="temp"></div>
+
 	<div class="container">
 		<br/><br/><br/>
 		<a href="index.html" >BBBBBBBBBBBBBBBBB</a>
@@ -113,7 +178,30 @@ a{text-decoration:none;}
     </thead>
 
  
-    <tbody>
+    <tbody class="dataTable-tbody">
+
+
+
+
+
+
+		</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+		</div>
+</body>
+</html>
+<!--
         <tr>
             <td class="c1 c_list" ><a href="news_content.html?id=1"><img src="images/test2.jpg" width="75" height="92" /></a></td>
             <td class="c2 c_list" ><a href="news_content.html?id=1">هدف دشمن ایجاد خطای محاسباتی در مسئولان با تهدید و تطمیع است</a></td>
@@ -174,24 +262,5 @@ a{text-decoration:none;}
             <td class="c2 c_list" ><a href="news_content.html?id=4">جزئیات جلسه قالیباف با اعضای شورای شهر منتشر شد</a></td>
             <td class="c3 c_list" >ضیافت افطاری شهردار تهران شب گذشته با حضور برخی اعضای شورای شهر و مسئولان شهری در سالن ایران‌زمین برگزار شد.</td>
         </tr>
+-->
 
-
-
-
-
-		</tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-		</div>
-</body>
-</html>
