@@ -28,6 +28,7 @@
 		download_list=new Array();
 		download_list_text="";
 		articles = "";
+		Root_Path = "";
 ////////////////////////////////////////////////////////////////////////////////////////////
 // START preloader :///////////////////////////////////////////////////////////////////////
 		function blockui() {
@@ -79,12 +80,20 @@
 			});			
 		}
 		function MakeDataTableContent(next) {
+			image_list_text = window.localStorage.getItem('image_list_text');
+			image_list = image_list_text.split('; -,');
+			var thumbnail='';
 			var output='';
 			$.each(articles.posts,function(key,val) {
 				output += '<tr><td class="c1 c_list" ><a href="news_content.html?id=' + val.id + '">';
-				output += (val.thumbnail) ?
-					'<img src="' + val.thumbnail + '"  width="75" height="92" /></a></td>':
-					'<img src="images/blank.png" width="75" height="92" /></a></td>';
+				if(val.thumbnail)
+				{
+					thumbnail = is_url_in_array(val.thumbnail,image_list);
+				}
+				{
+					thumbnail = "images/blank.png";
+				}
+				output += '<img src="' + thumbnail + '"  width="75" height="92" /></a></td>':
 				output += '<td class="c2 c_list" ><a href="news_content.html?id=' + val.id + '">' + val.title + '</a></td>';
 				output += '<td class="c3 c_list" >' + val.excerpt + '</td>';
 				/*
@@ -129,15 +138,19 @@
 		function StartDownload(next) {
 			download_list_text = window.localStorage.getItem('download_list_text');
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
-
-			//alert(download_list2);
 			if(download_list_text){
-				download_list = download_list_text.split('; -,');
-				$.each( download_list, function( i, val ){
-					DownloadFile(val, "temp", $.md5(val)  );
-					//alert(val);
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
-				});
+				var networkState = navigator.connection.type;
+				if (networkState == Connection.NONE) {
+
+				} else {
+					download_list = download_list_text.split('; -,');
+					download_list = unique_array(download_list);
+					$.each( download_list, function( i, val ){
+						DownloadFile(val, "temp", $.md5(val)  );
+						//alert(val);
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
+					});
+				}
 			}
 			next();
 		}
