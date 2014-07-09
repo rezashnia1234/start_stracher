@@ -88,7 +88,6 @@
 			var thumbnail='';
 			var output='';
 			$.each(articles.posts,function(key,val) {
-				output += '<tr><td class="c1 c_list" ><a href="news_content.html?id=' + val.id + '">';
 				if(val.thumbnail)
 				{
 					thumbnail = is_url_in_array(val.thumbnail,image_list);
@@ -97,16 +96,16 @@
 				{
 					thumbnail = "images/blank.png";
 				}
-				output += '<img src="' + thumbnail + '"  width="75" height="92" /></a></td>';
+				output += '<tr><td class="c1 c_list" ><a href="news_content.html?id=' + val.id + '">' + '<img src="' + thumbnail + '"  width="75" height="92" /></a></td>';
 				output += '<td class="c2 c_list" ><a href="news_content.html?id=' + val.id + '">' + val.title + '</a></td>';
-				output += '<td class="c3 c_list" >' + val.excerpt + '</td>';
+				output += '<td class="c3 c_list" ><a href="news_content.html?id=' + val.id + '">' + val.excerpt + '</a></td>';
+				output += '</tr>';
 				/*
 				var tempDiv = document.createElement("tempDiv");
 				tempDiv.innerHTML = val.excerpt;
 				$("a",tempDiv).remove();
 				var excerpt = tempDiv.innerHTML;	
 				*/
-				output += '</tr>';
 			});
 
 			$('.dataTable-tbody').html(output);
