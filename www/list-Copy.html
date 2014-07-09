@@ -80,6 +80,9 @@
 			});			
 		}
 		function MakeDataTableContent(next) {
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ASK FOR SRART DOWNLOAD');
+			StartDownload();
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END ASK FOR SRART DOWNLOAD');
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    START MakeDataTableContent');
 			image_list_text = window.localStorage.getItem('image_list_text');
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_text : ' +image_list_text);
@@ -110,7 +113,6 @@
 
 			$('.dataTable-tbody').html(output);
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END MakeDataTableContent');
-			StartDownload();
 			next();
 		}
 		function DrawDataTable(next) {
