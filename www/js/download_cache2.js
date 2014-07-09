@@ -2,7 +2,10 @@ function unique_array(list) {
     var result = [];
     $.each(list, function(i, e) {
         if ($.inArray(e, result) == -1)
-            result.push(e);
+		{
+			if(e!="")
+				result.push(e);
+		}
     });
     return result;
 }
