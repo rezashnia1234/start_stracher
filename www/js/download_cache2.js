@@ -26,7 +26,7 @@ function is_url_in_array(url,image_list) {
 	else
 	{
 		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / cache exist : ' + File_URL_link);
-		return fp + "/temp/" + File_URL_link;
+		return Root_Path + "/temp/" + File_URL_link;
 	}
 }
 // START DOWNLOAD FUNCTIONS :////////////////////////////////////////////////////////////////////
