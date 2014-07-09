@@ -11,17 +11,21 @@ function is_url_in_array(url,image_list) {
 	var File_URL_link = encodeURI(url);
 	ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1);
 	File_URL_link = $.md5(url) + "." + ext ;
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / File_URL_link : ' + File_URL_link);
 	if ($.inArray(File_URL_link, image_list) == -1)
 	{
 		var networkState = navigator.connection.type;
 		if (networkState == Connection.NONE) {
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / no internet : ' + "images/blank.png");
 			return  "images/blank.png";
 		} else {
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / url : ' + url);
 			return url;
 		}
 	}
 	else
 	{
+		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / cache exist : ' + File_URL_link);
 		return fp + "/temp/" + File_URL_link;
 	}
 }

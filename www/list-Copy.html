@@ -80,8 +80,11 @@
 			});			
 		}
 		function MakeDataTableContent(next) {
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    START MakeDataTableContent');
 			image_list_text = window.localStorage.getItem('image_list_text');
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_text : ' +image_list_text);
 			image_list = image_list_text.split('; -,');
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list : ' +image_list);
 			var thumbnail='';
 			var output='';
 			$.each(articles.posts,function(key,val) {
@@ -107,6 +110,8 @@
 			});
 
 			$('.dataTable-tbody').html(output);
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END MakeDataTableContent');
+			StartDownload();
 			next();
 		}
 		function DrawDataTable(next) {
@@ -132,11 +137,12 @@
 					"fnDrawCallback" : function(oSettings) {
 						// Update the element
 						unblockui();
-						next();
+						//next();
 					},
 			} );
 		}
-		function StartDownload(next) {
+		//function StartDownload(next) {
+		function StartDownload() {
 			download_list_text = window.localStorage.getItem('download_list_text');
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
 			if(download_list_text){
@@ -145,18 +151,15 @@
 
 				//} else {
 					download_list = download_list_text.split('; -,');
+					download_list = unique_array(download_list);
 					$.each( download_list, function( i, val ){
 						DownloadFile(val, "temp", $.md5(val)  );
 						//alert(val);
 						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
 					});
-					download_list = unique_array(download_list);
-					$.each( download_list, function( i, val ){
-						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile 222 : ' + val);
-					});
 				//}
 			}
-			next();
+			//next();
 		}
 		function init() {			
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start init()');
@@ -170,7 +173,7 @@
 			window.localStorage.setItem('image_list_text',"");
 			window.localStorage.setItem('download_list_text',"");
 			
-			$('#temp').queue(StartMakeImageList).delay( 1500 ).queue(MakeDataTableContent).queue(DrawDataTable).queue(StartDownload);//.delay( 1500 ).queue(StartShowList).queue(unblockui).queue(StartDownload);
+			$('#temp').queue(StartMakeImageList).delay( 1500 ).queue(MakeDataTableContent).queue(DrawDataTable);//.queue(StartDownload);//.delay( 1500 ).queue(StartShowList).queue(unblockui).queue(StartDownload);
 		}
 
 	</script>
