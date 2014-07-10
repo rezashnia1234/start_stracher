@@ -7,7 +7,7 @@
 * file for details.
 */
 var GapFile = {
-		extractDirectory: function(path){
+	extractDirectory: function(path){
 		var dirPath;
 		var lastSlash = path.lastIndexOf('/');
 		if(lastSlash == -1){

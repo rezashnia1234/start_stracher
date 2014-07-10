@@ -31,11 +31,6 @@
 -->
 
 	<script type="text/javascript">
-		image_list=new Array();
-		image_list_text="";
-		download_list=new Array();
-		download_list_text="";
-
 ////////////////////////////////////////////////////////////////////////////////////////////
 // START preloader ://///////////////////////////////////////////////////////////
 		function blockui() {
@@ -54,7 +49,7 @@
 		}
 		function unblockui(next) {
 			$.unblockUI();
-			next();
+			//next();
 		}
 // END preloader ://///////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -68,17 +63,17 @@
 			//document.addEventListener("DOMContentLoaded", loaded, false);
 		}
 		function onDeviceReady() {
-
-
-			FastClick.attach(document.body);
-			
+			FastClick.attach(document.body);	
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    start onDeviceReady');
+			
+			
+			//Check if it already exists or not
 			var applaunchCount = window.localStorage.getItem('launchCount');
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			window.localStorage.setItem('image_list_text',"");
 			window.localStorage.setItem('download_list_text',"");
-
-			//Check if it already exists or not
+			var is_it_first_load_of_page = window.sessionStorage.getItem('is_it_first_load_of_page');
+			
 			if(applaunchCount){
 				var temp = parseInt(applaunchCount2, 10);
 				temp = temp +1;
@@ -93,65 +88,78 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    first run');
 				$("#result").html('first run');
 			}
-
+			if(is_it_first_load_of_page){
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_it_first_load_of_page : false');
+			}
+			else
+			{
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_it_first_load_of_page : true');
+				window.sessionStorage.setItem('is_it_first_load_of_page',1);
+				CheckJSON();
+			}
 			
 
 
-			function StartMakeImageList(next) {			
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 139304141755349c3.jpg');
-				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/139304141755349c3.jpg", "temp", $.md5("http://farsi.khamenei.ir/ndata/home/1393/139304141755349c3.jpg")  );
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile sprites.png');
-				GetSavedFile("http://cdn.sstatic.net/stackoverflow/img/sprites.png", "temp", $.md5("http://cdn.sstatic.net/stackoverflow/img/sprites.png")  );
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt');
-				GetSavedFile("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt","temp", $.md5("http://ar.hamshahri.org/asset/json_data/aebd5dee718eb3c06cd5551460b9b43de061f8fc__17__0.txt")  );
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile 1393040918166a8e3.jpg');
-				GetSavedFile("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg","temp", $.md5("http://farsi.khamenei.ir/ndata/home/1393/1393040918166a8e3.jpg")  );
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END GetSavedFile');
-				next();				
-			}
-			function StartShowList(next) {
-				//window.localStorage.setItem('download_list_text',download_list_text.join('; -,'));
-				image_list_text = window.localStorage.getItem('image_list_text');
-				image_list = image_list_text.split('; -,');
-				download_list_text = window.localStorage.getItem('download_list_text');
-				download_list = download_list_text.split('; -,');
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_text : ' + download_list_text);
-				//temp
-				
-				var image_list_temp = "";
-				var download_list_temp = "";
 
-				$.each( image_list, function( i, val ){
-					image_list_temp = image_list_temp + "<br/>" + "image Index #" + i + ": " + val ;
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_temp add ' + val);
-				});
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    image_list_temp all ' + image_list_temp);
-				$.each( download_list, function( i, val ){
-					download_list_temp = download_list_temp + "<br/>" + "download Index #" + i + ": " + val ;
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp add ' + val);
-				});
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list_temp all ' + image_list_temp);
-				$("#result_download").html("test :<br/>" + image_list_temp + download_list_temp);
-				next();
-			}
-			function StartDownload(next) {
-				download_list_text = window.localStorage.getItem('download_list_text');
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download_list2 : ' + download_list_text);
 
-				//alert(download_list2);
-				if(download_list_text){
-					download_list = download_list_text.split('; -,');
-					$.each( download_list, function( i, val ){
-						DownloadFile(val, "temp", $.md5(val)  );
-						//alert(val);
-						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    ask for DownloadFile : ' + val);
-					});
+			function CheckJSON() {
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Start CheckJSON');
+				function is_fileExists(result){
+					can_we_goto_news = "no";
+					if(result)
+					{
+						can_we_goto_news = "yes";
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / is_fileExists : True');
+						var networkState = navigator.connection.type;
+						if (networkState == Connection.NONE) {
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / no internet BUT we have cache');
+							can_we_goto_news = "yes";
+						} else {
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / check cache lastModifiedDate');
+							$.ajax({ type: "GET",   
+									url: "http://smcms.ir/tmp/articles_version.php",   
+									async: false,
+									success : function(text)
+									{
+										//last_articles_version = text;
+										console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / last_articles_version : ' + text);
+										if(text == window.localStorage.getItem('last_articles_version')	)
+										{
+											console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / last_articles_version / no need to download ');
+											can_we_goto_news = "yes";
+										}
+										else
+										{
+											console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / Start Download JSON For cache');
+											DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", articles_json);
+										}
+									}
+							});
+						}
+					}
+					else
+					{
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / is_fileExists : False');
+						var networkState = navigator.connection.type;
+						if (networkState == Connection.NONE) {
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / no internet AND no cache');
+						} else {
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / Start Download JSON For cache');
+							DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", articles_json);
+						}
+					}
 				}
-				next();
+				function fileDownloadProblem(){
+						alert("we have some problem");
+				}
+				GapFile.fileExists("temp/articles_json.php", is_fileExists, fileDownloadProblem);
+				//DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", articles_json);
+				//DownloadFile("http://smcms.ir/tmp/articles_version.php", "temp", articles_version);
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END CheckJSON');
 			}
-			$('#temp').queue(StartMakeImageList).delay( 1500 ).queue(StartShowList).queue(unblockui).queue(StartDownload);
+
 			
-			
+			unblockui();
 		}
 	
 	

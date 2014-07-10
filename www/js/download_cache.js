@@ -1,9 +1,43 @@
+can_we_goto_news = "no";
 
-	
-// START DOWNLOAD FUNCTIONS :///////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////
+function unique_array(list) {
+    var result = [];
+    $.each(list, function(i, e) {
+        if ($.inArray(e, result) == -1)
+		{
+			if(e!="")
+				result.push(e);
+		}
+    });
+    return result;
+}
+function is_url_in_array(url,image_list) {
+	var ext = "";
+	var File_URL_link = encodeURI(url);
+	ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1);
+	File_URL_link = $.md5(url) + "." + ext ;
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / File_URL_link : ' + File_URL_link);
+	if ($.inArray(File_URL_link, image_list) == -1)
+	{
+		var networkState = navigator.connection.type;
+		if (networkState == Connection.NONE) {
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / no internet : ' + "images/blank.png");
+			return  "images/blank.png";
+		} else {
+			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / url : ' + url);
+			return url;
+		}
+	}
+	else
+	{
+		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_url_in_array / cache exist : ' + File_URL_link);
+		return Root_Path + "/temp/" + File_URL_link;
+	}
+}
+// START DOWNLOAD FUNCTIONS :////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 //First step check parameters mismatch and checking network connection if available call    download function
 function DownloadFile(URL, Folder_Name, File_Name) {
@@ -67,6 +101,18 @@ function filetransfer(download_link, fp) {
 	fileTransfer.download(download_link, fp,
 				function (entry) {
 					//alert("download complete: " + entry.toURL());
+					if(GapFile.extractFilename(entry.toURL()) == "articles_json.php")
+					{
+						$.ajax({ type: "GET",   
+								 url: "http://smcms.ir/tmp/articles_version.php",   
+								 async: false,
+								 success : function(text)
+								 {
+									window.localStorage.setItem('last_articles_version') = text;
+								 }
+						});
+						can_we_goto_news = "yes";
+					}
 				},
                  function (error) {
                      //Download abort errors or download failed errors
@@ -102,6 +148,7 @@ function GetSavedFile(File_URL,Folder_Name,File_Name) {
 		var ext = "";
 		var rootdir = fileSystem.root;
 		var fp = rootdir.toURL(); // Returns Fulpath of local directory
+		Root_Path = fp;
 		
 		var File_URL_link = encodeURI(File_URL);
 		ext = File_URL_link.substr(File_URL_link.lastIndexOf('.') + 1); //Get extension of URL
@@ -113,28 +160,29 @@ function GetSavedFile(File_URL,Folder_Name,File_Name) {
 			{
 				//alert("File " +  " exists!");
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile is_fileExists true : ' + fp);
-				cache_file_address = fp;
+				//cache_file_address = fp;
+				cache_file_address = File_Name + "." + ext;
 			}
 			else
 			{
-				//fileDoesNotExist
-				//alert("file does not exist");
-				//DownloadFile(File_URL, Folder_Name, File_Name);
-				var networkState = navigator.connection.type;
-				if (networkState == Connection.NONE) {
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile no internet : ' + "images/blank.png");
-					cache_file_address = "images/blank.png";
-				} else {
-					cache_file_address = File_URL;
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile we have internet : ' + cache_file_address + "////fp : " + fp);
+				//var networkState = navigator.connection.type;
+				//if (networkState == Connection.NONE) {
+				//	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile no internet : ' + "images/blank.png");
+					//cache_file_address = "images/blank.png";
+				//} else {
+					//cache_file_address = File_URL;
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile No cache for : ' + cache_file_address + "////fp : " + fp);
 					//download_list.push(File_URL);
 					download_list_text_temp = window.localStorage.getItem('download_list_text');
 					window.localStorage.setItem('download_list_text',download_list_text_temp + '; -,' + File_URL);
-				}
+				//}
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile is_fileExists False : ' + File_URL);
 			}
-			image_list_text_temp = window.localStorage.getItem('image_list_text');
-			window.localStorage.setItem('image_list_text',image_list_text_temp + '; -,' + cache_file_address);
+			if(cache_file_address)
+			{
+				image_list_text_temp = window.localStorage.getItem('image_list_text');
+				window.localStorage.setItem('image_list_text',image_list_text_temp + '; -,' + cache_file_address);
+			}
 			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    GetSavedFile image_list_text_temp : ' + image_list_text_temp + '; -,' + cache_file_address);
 		}
 		function fileDownloadProblem(){
@@ -147,12 +195,12 @@ function GetSavedFile(File_URL,Folder_Name,File_Name) {
 	function fileSystemFail_fileSystemSuccess_GetSavedFile(evt) {
 		//Unable to access file system
 		alert(evt.target.error.code);
-		var networkState = navigator.connection.type;
-		if (networkState == Connection.NONE) {
-			cache_file_address = "images/blank.png";
-		} else {
-			cache_file_address = File_URL;
-		}
+		//var networkState = navigator.connection.type;
+		//if (networkState == Connection.NONE) {
+		//	cache_file_address = "images/blank.png";
+		//} else {
+		//	cache_file_address = File_URL;
+		//}
 	}
 
 	//image_list.push(cache_file_address);
