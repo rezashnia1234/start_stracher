@@ -112,6 +112,7 @@ function filetransfer(download_link, fp) {
 								 {
 									console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : setItem("last_articles_version") : ' + text	);
 									window.localStorage.setItem('last_articles_version') = text;
+									window.sessionStorage.setItem('can_we_goto_news',"yes");
 								 }
 						});
 						window.sessionStorage.setItem('can_we_goto_news',"yes");
