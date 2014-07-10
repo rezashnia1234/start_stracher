@@ -78,27 +78,6 @@ function download(URL, Folder_Name, File_Name) {
 
 		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext; // fullpath and name of the file which we want to give
 		// download function call
-		
-		
-		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : ' + entry.toURL());
-		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : GapFile.extractFilename(entry.toURL()) : ' + GapFile.extractFilename(entry.toURL()));
-		if(GapFile.extractFilename(download_link) == "articles_json.php")
-		{
-			$.ajax({ type: "GET",   
-					 url: "http://smcms.ir/tmp/articles_version.php",   
-					 async: false,
-					 success : function(text)
-					 {
-						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : setItem("last_articles_version") : ' + text	);
-						window.localStorage.setItem('last_articles_version') = text;
-						window.sessionStorage.setItem('can_we_goto_news',"yes");
-					 }
-			});
-			window.sessionStorage.setItem('can_we_goto_news',"yes");
-			console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : can_we_goto_news : yes');
-		}
-		
-		
 		filetransfer(download_link, fp);
 	}
 
@@ -122,6 +101,23 @@ function filetransfer(download_link, fp) {
 	fileTransfer.download(download_link, fp,
 				function (entry) {
 					//alert("download complete: " + entry.toURL());
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : ' + entry.toURL());
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : GapFile.extractFilename(entry.toURL()) : ' + GapFile.extractFilename(entry.toURL()));
+					if(GapFile.extractFilename(entry.toURL()) == "articles_json.php")
+					{
+						$.ajax({ type: "GET",   
+								 url: "http://smcms.ir/tmp/articles_version.php",   
+								 async: false,
+								 success : function(text)
+								 {
+									console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : setItem("last_articles_version") : ' + text	);
+									window.localStorage.setItem('last_articles_version') = text;
+									window.sessionStorage.setItem('can_we_goto_news',"yes");
+								 }
+						});
+						window.sessionStorage.setItem('can_we_goto_news',"yes");
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : can_we_goto_news : yes');
+					}
 				},
                  function (error) {
                      //Download abort errors or download failed errors
