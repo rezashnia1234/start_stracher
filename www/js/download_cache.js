@@ -101,6 +101,8 @@ function filetransfer(download_link, fp) {
 	fileTransfer.download(download_link, fp,
 				function (entry) {
 					//alert("download complete: " + entry.toURL());
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : ' + entry.toURL());
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : GapFile.extractFilename(entry.toURL()) : ' + GapFile.extractFilename(entry.toURL()));
 					if(GapFile.extractFilename(entry.toURL()) == "articles_json.php")
 					{
 						$.ajax({ type: "GET",   
@@ -108,10 +110,12 @@ function filetransfer(download_link, fp) {
 								 async: false,
 								 success : function(text)
 								 {
+									console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : setItem("last_articles_version") : ' + text	);
 									window.localStorage.setItem('last_articles_version') = text;
 								 }
 						});
 						window.sessionStorage.setItem('can_we_goto_news',"yes");
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : can_we_goto_news : yes');
 					}
 				},
                  function (error) {
