@@ -72,7 +72,7 @@
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			window.localStorage.setItem('image_list_text',"");
 			window.localStorage.setItem('download_list_text',"");
-			var is_it_first_load_of_page = window.sessionStorage.getItem('is_it_first_load_of_page');
+			var can_we_goto_news = window.sessionStorage.getItem('can_we_goto_news');
 			
 			if(applaunchCount){
 				var temp = parseInt(applaunchCount2, 10);
@@ -88,13 +88,13 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    first run');
 				$("#result").html('first run');
 			}
-			if(is_it_first_load_of_page){
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_it_first_load_of_page : false');
+			if(can_we_goto_news=="yes"){
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    can_we_goto_news : yes');
 			}
 			else
 			{
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    is_it_first_load_of_page : true');
-				window.sessionStorage.setItem('is_it_first_load_of_page',1);
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    can_we_goto_news : no');
+				//window.sessionStorage.setItem('can_we_goto_news',"yes");
 				CheckJSON();
 			}
 			
@@ -105,15 +105,16 @@
 			function CheckJSON() {
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Start CheckJSON');
 				function is_fileExists(result){
-					can_we_goto_news = "no";
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / START is_fileExists');
+					window.sessionStorage.setItem('can_we_goto_news',"no");
 					if(result)
 					{
-						can_we_goto_news = "yes";
+						window.sessionStorage.setItem('can_we_goto_news',"yes");
 						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / is_fileExists : True');
 						var networkState = navigator.connection.type;
 						if (networkState == Connection.NONE) {
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / no internet BUT we have cache');
-							can_we_goto_news = "yes";
+							window.sessionStorage.setItem('can_we_goto_news',"yes");
 						} else {
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / check cache lastModifiedDate');
 							$.ajax({ type: "GET",   
@@ -126,12 +127,12 @@
 										if(text == window.localStorage.getItem('last_articles_version')	)
 										{
 											console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / last_articles_version / no need to download ');
-											can_we_goto_news = "yes";
+											window.sessionStorage.setItem('can_we_goto_news',"yes");
 										}
 										else
 										{
 											console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / Start Download JSON For cache');
-											DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", articles_json);
+											DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", "articles_json");
 										}
 									}
 							});
@@ -145,7 +146,7 @@
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / no internet AND no cache');
 						} else {
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / Start Download JSON For cache');
-							DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", articles_json);
+							DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", "articles_json");
 						}
 					}
 				}
@@ -153,8 +154,8 @@
 						alert("we have some problem");
 				}
 				GapFile.fileExists("temp/articles_json.php", is_fileExists, fileDownloadProblem);
-				//DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", articles_json);
-				//DownloadFile("http://smcms.ir/tmp/articles_version.php", "temp", articles_version);
+				//DownloadFile("http://smcms.ir/tmp/articles_json.php", "temp", "articles_json");
+				//DownloadFile("http://smcms.ir/tmp/articles_version.php", "temp", "articles_version");
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END CheckJSON');
 			}
 

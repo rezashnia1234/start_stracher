@@ -111,7 +111,7 @@ function filetransfer(download_link, fp) {
 									window.localStorage.setItem('last_articles_version') = text;
 								 }
 						});
-						can_we_goto_news = "yes";
+						window.sessionStorage.setItem('can_we_goto_news',"yes");
 					}
 				},
                  function (error) {
