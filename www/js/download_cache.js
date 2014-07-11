@@ -1,5 +1,3 @@
-can_we_goto_news = "no";
-
 function unique_array(list) {
     var result = [];
     $.each(list, function(i, e) {
@@ -104,12 +102,15 @@ function filetransfer(download_link, fp) {
 	// File download function with URL and local path
 	fileTransfer.download(download_link, fp,
 				function (entry) {
-					alert("download complete: " + entry.toURL());
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : ' + entry.toURL());
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : GapFile.extractFilename(entry.toURL()) : ' + GapFile.extractFilename(entry.toURL()));
-					if(GapFile.extractFilename(entry.toURL()) == "articles_json.php")
+					//alert("download complete: " + entry.toURL());
+					var temp_file_name = GapFile.extractFilename(entry.toURL());
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : ' + temp_file_name);
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : GapFile.extractFilename(entry.toURL()) : ' + temp_file_name);
+					if(temp_file_name == "articles_json.php")
 					{
-						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    function ajax articles_version.php');
+						window.sessionStorage.setItem('can_we_goto_news',"yes");
+						$('.loading').css({'display':'none'});
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    function ajax articles_version.php   ///' + window.sessionStorage.getItem('can_we_goto_news')  );
 						$.ajax({ type: "GET",   
 								 url: "http://smcms.ir/tmp/articles_version.php",   
 								 async: false,
@@ -117,10 +118,8 @@ function filetransfer(download_link, fp) {
 								 {
 									console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : setItem("last_articles_version") : ' + text	);
 									window.localStorage.setItem('last_articles_version') = text;
-									window.sessionStorage.setItem('can_we_goto_news',"yes");
 								 }
 						});
-						window.sessionStorage.setItem('can_we_goto_news',"yes");
 						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : can_we_goto_news : yes');
 					}
 				},

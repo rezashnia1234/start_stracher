@@ -72,7 +72,6 @@
 			var applaunchCount2 = window.localStorage.getItem('applaunchCount2');
 			window.localStorage.setItem('image_list_text',"");
 			window.localStorage.setItem('download_list_text',"");
-			var can_we_goto_news = window.sessionStorage.getItem('can_we_goto_news');
 			
 			if(applaunchCount){
 				var temp = parseInt(applaunchCount2, 10);
@@ -81,6 +80,16 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    second run : ' + temp);
 				$("#result").html('second run : ' + temp);
 			}else{
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess_statup, fileSystemFail_statup);
+
+				function fileSystemSuccess_statup(fileSystem) {
+					var ext = "";
+					var rootdir = fileSystem.root;
+					var Root_Path = rootdir.toURL(); // Returns Fulpath of local directory
+					window.localStorage.setItem('Root_Path',Root_Path);
+				}
+				function fileSystemFail_statup(fileSystem) {}
+				
 				GapFile.mkDirectory("temp", GapFileSuccess, GapFileSuccess);
 
 				window.localStorage.setItem('launchCount',1);
@@ -88,7 +97,7 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    first run');
 				$("#result").html('first run');
 			}
-			if(can_we_goto_news=="yes"){
+			if(window.sessionStorage.getItem('can_we_goto_news')=="yes"){
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    can_we_goto_news : yes');
 			}
 			else
@@ -106,7 +115,7 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Start CheckJSON');
 				function is_fileExists(result){
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / START is_fileExists');
-					//window.sessionStorage.setItem('can_we_goto_news',"no");
+					window.sessionStorage.setItem('can_we_goto_news',"no");
 					if(result)
 					{
 						window.sessionStorage.setItem('can_we_goto_news',"yes");
@@ -114,7 +123,6 @@
 						var networkState = navigator.connection.type;
 						if (networkState == Connection.NONE) {
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / no internet BUT we have cache');
-							window.sessionStorage.setItem('can_we_goto_news',"yes");
 						} else {
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / check cache lastModifiedDate');
 							$.ajax({ type: "GET",   
@@ -207,10 +215,13 @@
 				<a href="list.html" >list.html</a><br/>
 			</p>
 			<p>
-				<a href="list-Copy.html" >list-Copy.html</a><br/>
+				<a href="list-Copy.html" >list-Copy.html<img src="images/loading.gif" class="loading"  style="height: auto; display: inline; width: 34px; margin-left: 10px;" /></a> <br/>
 			</p>
 			<p>
 				<a href="menu.html" >menu.html</a><br/>
+			</p>
+			<p>
+				<div onclick="alert(window.sessionStorage.getItem('can_we_goto_news') + '//' + can_we_goto_news);">menu.html</a><br/>
 			</p>
 			<p>اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد 			اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد</p>
 			<p>اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد.اگر شما بانوى نخبه‌ى اسلامى تلاش كنيد كه هويت اسلامی را به زن مسلمان برگردانيد، بزرگترين خدمت را به امت اسلامى و به بيدارى اسلامى و به عزت و كرامت اسلامى كرديد</p>

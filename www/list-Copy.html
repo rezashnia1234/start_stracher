@@ -55,7 +55,7 @@
 		}
 		function StartMakeImageList(next) {
 			$.ajax({
-				url: 'js/articles.json',
+				url: window.localStorage.setItem('Root_Path')+'temp/articles_json.php',//'js/articles.json',
 				crossDomain: true,
 				jsonpCallback: 'cb',
 				dataType: 'jsonp',
