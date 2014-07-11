@@ -116,8 +116,8 @@ function filetransfer(download_link, fp) {
 								 async: false,
 								 success : function(text)
 								 {
+									window.localStorage.setItem('last_articles_version') = 2;//text;
 									console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : setItem("last_articles_version") : ' + text	);
-									window.localStorage.setItem('last_articles_version') = text;
 								 }
 						});
 						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : can_we_goto_news : yes');
