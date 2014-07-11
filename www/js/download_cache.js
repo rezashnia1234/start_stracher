@@ -109,6 +109,7 @@ function filetransfer(download_link, fp) {
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : GapFile.extractFilename(entry.toURL()) : ' + GapFile.extractFilename(entry.toURL()));
 					if(GapFile.extractFilename(entry.toURL()) == "articles_json.php")
 					{
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    function ajax articles_version.php');
 						$.ajax({ type: "GET",   
 								 url: "http://smcms.ir/tmp/articles_version.php",   
 								 async: false,
@@ -124,7 +125,7 @@ function filetransfer(download_link, fp) {
 					}
 				},
                  function (error) {
-					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download error : can_we_goto_news : yes');
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download error : can_we_goto_news : no');
                      //Download abort errors or download failed errors
                      console.log('SMGROUP ::::::::::::::::::::::::::::::::::::   download error source ' + error.source);
                      console.log('SMGROUP ::::::::::::::::::::::::::::::::::::   download error target ' + error.target);
