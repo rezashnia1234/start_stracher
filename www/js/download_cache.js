@@ -58,10 +58,12 @@ function DownloadFile(URL, Folder_Name, File_Name) {
 	}
 }
 function download(URL, Folder_Name, File_Name) {
-	//step to request a file system 
+	//step to request a file system
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    function download');
 	window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
 
 	function fileSystemSuccess(fileSystem) {
+		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    function fileSystemSuccess');
 		var ext = "";
 		var download_link = encodeURI(URL);
 		ext = download_link.substr(download_link.lastIndexOf('.') + 1); //Get extension of URL
@@ -78,6 +80,7 @@ function download(URL, Folder_Name, File_Name) {
 
 		fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext; // fullpath and name of the file which we want to give
 		// download function call
+		console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    function filetransfer 0');
 		filetransfer(download_link, fp);
 	}
 
@@ -97,6 +100,7 @@ function download(URL, Folder_Name, File_Name) {
 }
 function filetransfer(download_link, fp) {
 	var fileTransfer = new FileTransfer();
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    function filetransfer 1');
 	// File download function with URL and local path
 	fileTransfer.download(download_link, fp,
 				function (entry) {
@@ -128,6 +132,7 @@ function filetransfer(download_link, fp) {
                      console.log('SMGROUP ::::::::::::::::::::::::::::::::::::   fiel path : ' + fp);
                  }
 	);
+	console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    END function filetransfer 1');
 }
 // END DOWNLOAD FUNCTIONS ://///////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
