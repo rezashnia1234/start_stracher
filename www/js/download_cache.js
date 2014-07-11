@@ -100,7 +100,7 @@ function filetransfer(download_link, fp) {
 	// File download function with URL and local path
 	fileTransfer.download(download_link, fp,
 				function (entry) {
-					//alert("download complete: " + entry.toURL());
+					alert("download complete: " + entry.toURL());
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : ' + entry.toURL());
 					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download complete : GapFile.extractFilename(entry.toURL()) : ' + GapFile.extractFilename(entry.toURL()));
 					if(GapFile.extractFilename(entry.toURL()) == "articles_json.php")
@@ -120,11 +120,12 @@ function filetransfer(download_link, fp) {
 					}
 				},
                  function (error) {
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    download error : can_we_goto_news : yes');
                      //Download abort errors or download failed errors
-                     //alert("download error source " + error.source);
-                     //alert("download error target " + error.target);
-                     //alert("upload error code" + error.code);
-                     //alert("fiel path : " + fp);
+                     console.log('SMGROUP ::::::::::::::::::::::::::::::::::::   download error source ' + error.source);
+                     console.log('SMGROUP ::::::::::::::::::::::::::::::::::::   download error target ' + error.target);
+                     console.log('SMGROUP ::::::::::::::::::::::::::::::::::::   upload error code' + error.code);
+                     console.log('SMGROUP ::::::::::::::::::::::::::::::::::::   fiel path : ' + fp);
                  }
 	);
 }
