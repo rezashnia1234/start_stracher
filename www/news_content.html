@@ -36,7 +36,7 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    get_article / START');
 				var networkState = navigator.connection.type;
 				if (networkState == Connection.NONE) {
-					var article_json = window.sessionStorage.getItem('article_json_' + id);
+					var article_json = window.localStorage.getItem('article_json_' + id);
 					if(article_json)
 					{
 						$('.container').html(article_json);
@@ -54,7 +54,7 @@
 							success : function(text)
 							{
 								$('.container').html(text);
-								window.sessionStorage.setItem('article_json_' + id,text);
+								window.localStorage.setItem('article_json_' + id,text);
 							}
 					});
 				}
