@@ -122,6 +122,7 @@
 						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / is_fileExists : True');
 						var networkState = navigator.connection.type;
 						if (networkState == Connection.NONE) {
+							$('.loading').css({'display':'none'});
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / no internet BUT we have cache');
 						} else {
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / check cache lastModifiedDate');
@@ -137,6 +138,7 @@
 										{
 											console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    CheckJSON / last_articles_version / no need to download ');
 											window.sessionStorage.setItem('can_we_goto_news',"yes");
+											$('.loading').css({'display':'none'});
 										}
 										else
 										{

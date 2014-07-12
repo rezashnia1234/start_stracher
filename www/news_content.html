@@ -33,16 +33,52 @@
 				return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
 			var id = getParameterByName('id');
-			alert(id);
+			//alert(id);
+			function get_article(id){
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    get_article / START');
+				var networkState = navigator.connection.type;
+				if (networkState == Connection.NONE) {
+					var article_json = window.sessionStorage.getItem('article_json_' + id);
+					if(article_json)
+					{
+						$('.container').html(article_json);
+					}
+					else
+					{
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    get_article / no internet AND no cache');
+						$('.container').html("برای مشاهده این صفحه نیاز به اینترنت دارید");
+					}
+				} else {
+					console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    get_article / Start Download JSON For cache');
+					$.ajax({ type: "GET",   
+							url: "http://smcms.ir/tmp/article_json.php?id=" + id,   
+							async: false,
+							success : function(text)
+							{
+								$('.container').html(text);
+								window.sessionStorage.setItem('article_json_' + id,text);
+							}
+					});
+				}
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 	</script>
 </head>
 <body onload="init()">
 	<div id="temp"></div>
+	<br/><br/><br/>
+	<a href="list-Copy.html" >BBBBBBBBBBBBBBBBB</a>
+	<br/><br/><br/>
 	<div class="container">
-		<br/><br/><br/>
-		<a href="list-Copy.html" >BBBBBBBBBBBBBBBBB</a>
-		<br/><br/><br/>
 
 
 
@@ -50,6 +86,7 @@
 
 
 
-		</div>
+
+	</div>
 </body>
 </html>
