@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "ir.smgroup.saveimage"
+        id        = "ir.smgroup.pardis"
         version   = "1.0.0">
 		
 		
@@ -10,6 +10,7 @@
     <author href="http://smgroup.ir" email="info@smgroup.ir">Sorush Mehr Rezvan</author>
 		
     <!--
+		ir.smgroup.saveimage
         If you do not want any permissions to be added to your app, add the
         following tag to your config.xml; you will still have the INTERNET
         permission on your app, which PhoneGap requires. 
@@ -54,9 +55,10 @@
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
     <!-- 
         <gap:plugin name="com.phonegap.plugins.barcodescanner" />
-
 		<gap:plugin name="com.kumbe.phonegap.zoom.zoomcontrol" version="0.1.5" />
-    -->		
+    -->	
+    <gap:plugin name="com.adobe.plugins.pushplugin" />
+
 		
     <!-- Define app icon  -->
     <icon src="icon.png" />
