@@ -57,7 +57,7 @@
         <gap:plugin name="com.phonegap.plugins.barcodescanner" />
 		<gap:plugin name="com.kumbe.phonegap.zoom.zoomcontrol" version="0.1.5" />
     -->	
-    <gap:plugin name="com.adobe.plugins.pushplugin" />
+    <gap:plugin name="com.phonegap.plugins.pushplugin" />
 
 		
     <!-- Define app icon  -->
