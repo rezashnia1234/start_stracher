@@ -32,8 +32,6 @@
 					results = regex.exec(location.search);
 				return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 			}
-			var id = getParameterByName('id');
-			//alert(id);
 			function get_article(id){
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    get_article / START');
 				var networkState = navigator.connection.type;
