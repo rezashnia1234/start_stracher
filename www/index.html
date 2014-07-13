@@ -111,12 +111,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 // START push Notification ://///////////////////////////////////////////////////////////
 			pushNotification = window.plugins.pushNotification;
-			if(window.sessionStorage.getItem('register_for_notif')=="yes"){
+			if(window.localStorage.getItem('register_for_notif')=="yes"){
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    register_for_notif : yes');
 			}
 			else
 			{
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    register_for_notif : no');
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    register_for_notif : no // ' + device.platform);
 				if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
 					pushNotification.register(successHandler,errorHandler,{"senderID":"804625540618","ecb":"onNotificationGCM"});
 				} else {
@@ -133,10 +133,10 @@
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification' + error);
 			}
 			function onNotificationGCM(e) {
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification onNotificationGCM = ' + e.serialize() );
 				switch( e.event )
 				{
 					case 'registered':
-						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration = '+e);
 						if ( e.regid.length > 0 )
 						{
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration id = '+e.regid);
@@ -148,6 +148,7 @@
 									{
 										//last_articles_version = text;
 										console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration text : ' + text);
+										window.localStorage.setItem('register_for_notif','yes');
 									}
 							});
 						}
