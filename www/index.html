@@ -118,16 +118,16 @@
 			{
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    register_for_notif : no');
 				if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
-					pushNotification.register(successHandler,errorHandler,{"senderID":"804625540618","ecb":"onNotification"});
+					pushNotification.register(successHandler,errorHandler,{"senderID":"804625540618","ecb":"onNotificationGCM"});
 				} else {
-					pushNotification.register(tokenHandler,errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});
+					pushNotification.register(tokenHandler,errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"onNotificationGCM"});//"onNotificationAPN"});
 				}
 			}
 			function successHandler(result) {
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification Callback Success! Result = '+result)
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification Callback Success! Result (android) = '+result)
 			}
 			function tokenHandler(result) {
-				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification Callback Success! Result = '+result)
+				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification Callback Success! Result (ios) = '+result)
 			}
 			function errorHandler(error) {
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification' + error);
@@ -136,6 +136,7 @@
 				switch( e.event )
 				{
 					case 'registered':
+						console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration = '+e);
 						if ( e.regid.length > 0 )
 						{
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration id = '+e.regid);
