@@ -125,9 +125,31 @@
 			}
 			function successHandler(result) {
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification Callback Success! Result (android) = '+result);
+				$.ajax({ type: "POST",
+						url: "http://ava.smgroup.ir/notification/RegisterDeviceIDtoDB.php", 
+						data: {regID : result,user:"ir.smgroup.pardis",OS:device.platform},
+						async: false,
+						success : function(text)
+						{
+							//last_articles_version = text;
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration text : ' + text);
+							window.localStorage.setItem('register_for_notif','yes');
+						}
+				});
 			}
 			function tokenHandler(result) {
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification Callback Success! Result (ios) = '+result);
+				$.ajax({ type: "POST",
+						url: "http://ava.smgroup.ir/notification/RegisterDeviceIDtoDB.php", 
+						data: {regID : result,user:"ir.smgroup.pardis",OS:device.platform},
+						async: false,
+						success : function(text)
+						{
+							//last_articles_version = text;
+							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration text : ' + text);
+							window.localStorage.setItem('register_for_notif','yes');
+						}
+				});
 			}
 			function errorHandler(error) {
 				console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification' + error);
@@ -140,17 +162,6 @@
 						if ( e.regid.length > 0 )
 						{
 							console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration id = '+e.regid);
-							$.ajax({ type: "POST",
-									url: "http://ava.smgroup.ir/notification/RegisterDeviceIDtoDB.php?regID=eb42bbdb07f2d77c4a54876ec6553e07d3f50d2f&user=com.CFM.ECPN&OS=editor", 
-									data: {regID : e.regid,user:"ir.smgroup.pardis",OS:device.platform},
-									async: false,
-									success : function(text)
-									{
-										//last_articles_version = text;
-										console.log('SMGROUP ::::::::::::::::::::::::::::::::::::    Notification registration text : ' + text);
-										window.localStorage.setItem('register_for_notif','yes');
-									}
-							});
 						}
 					break;
 		 
